@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0e3606</color>
+    <color name="colorPrimaryDark">#0e3606</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="softWhite">#CCCCCC</color>
+    <color name="borderWhite">#9b9b9b</color>
+    <color name="backCard">#16207e</color>
+    <color name="borderBack">#10185b</color>
+    <color name="tableColor">#195c0a</color>
+</resources>

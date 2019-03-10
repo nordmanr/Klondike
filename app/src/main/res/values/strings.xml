@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Klondike</string>
+    <string name="action_settings">Settings</string>
+    <string name="spade">♠</string>
+    <string name="club">♣</string>
+    <string name="heart">❤</string>
+    <string name="diamond">♦</string>
+    <string name="talon">▩</string>
+</resources>

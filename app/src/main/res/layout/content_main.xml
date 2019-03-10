@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainActivity"
+    tools:showIn="@layout/activity_main"
+    android:id="@+id/top"
+    android:background="@color/tableColor">
+
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:minHeight="@dimen/DEBUG_loc_height"
+        android:minWidth="@dimen/DEBUG_loc_width"
+        android:id="@+id/loc_talon"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:background="#ffffff00" />
+
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:minHeight="@dimen/DEBUG_loc_height"
+        android:minWidth="@dimen/DEBUG_loc_width"
+        android:id="@+id/loc_waste"
+        android:layout_toRightOf="@+id/loc_talon"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="#ffff0000" />
+
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:minHeight="@dimen/DEBUG_loc_height"
+        android:minWidth="@dimen/DEBUG_loc_width"
+        android:id="@+id/loc_foundations"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="#ff00ff00" />
+
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:minHeight="@dimen/DEBUG_loc_height"
+        android:minWidth="@dimen/DEBUG_loc_width"
+        android:id="@+id/loc_tableaus"
+        android:layout_below="@+id/loc_talon"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:background="#ff0000ff" />
+
+</RelativeLayout>

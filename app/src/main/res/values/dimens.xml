@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="DEBUG_loc_width">60dp</dimen>  <!-- Min size of positioning rectangle for DEBUG mode -->
+    <dimen name="DEBUG_loc_height">90dp</dimen> <!-- Min size of positioning rectangle for DEBUG mode -->
+</resources>
