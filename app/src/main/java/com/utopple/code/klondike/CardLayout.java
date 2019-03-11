@@ -10,12 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class CardLayout extends LinearLayout {
-	public static final int IN_TALON=0;
-	public static final int IN_WASTE=1;
-	public static final int IN_TABLEAUS=2;
-	public static final int IN_FOUNDATIONS=3;
-
-
 	private Card card;
 
 	public CardLayout(Context context) {
@@ -32,7 +26,6 @@ public class CardLayout extends LinearLayout {
 	public Card getCard() {
 		return card;
 	}
-
 
 	public CardLayout drawCard(int widthOfCard, int heightOfCard){
 		TextView label1,label2;

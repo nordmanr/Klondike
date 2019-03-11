@@ -1,11 +1,8 @@
 package com.utopple.code.klondike;
 
-import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
@@ -17,33 +14,22 @@ import java.util.Stack;
 
 public class Table {
     private Deck baseDeck;	// a 52 card deck
-	private ArrayList<CardLayout> allCards;
-	private Stack<CardLayout> talon;  // Remaining deck
-	private Stack<CardLayout>[] foundations;	// Starts with Ace as base, build up
-	private ArrayList<CardLayout>[] tableaus;	// Playable space, counts down
-	private Stack<CardLayout> waste;  // Flipped from talon can move to foundation or tableau
+	private ArrayList<Card> allCards;
+	private Stack<Card> talon;  // Remaining deck
+	private Stack<Card>[] foundations;	// Starts with Ace as base, build up
+	private ArrayList<Card>[] tableaus;	// Playable space, counts down
+	private Stack<Card> waste;  // Flipped from talon can move to foundation or tableau
 	private int score;	//	Score this game
-	private MainActivity context;	//	Drawing to this context
-	private LinearLayout loopTalon;
-
-
-	private static int viewWidth;		// Width of screen (px)
-	private static int viewHeight;		// Height of screen (px)
-	private static int widthOfCard = 50;		// Width of each card when drawn (in px)
-	private static int heightOfCard = 75;	// Height of each card when drawn (in px)
-	private static boolean aCardIsSelected;	// Flag to use when moving a card around
-	private static CardLayout moveCard;	// which card we are trying to move
-	private static CardLayout toHere;	// And to where we are moving it
+	private int moveToWasteAmt;
+	private boolean movedFromWaste;
 
 
 	private final static int SCORE_FOUNDATION = 10;			// Score awarded whenever something is added to a Foundation
 	private final static int SCORE_TABLEAU = 5;				// Score awarded when Waste to Tableau or flip Tableau card
 	private final static int SCORE_OFF_FOUNDATION = -15;	// Score when moving Foundation to Tableau
-	private final static int NUM_OF_TABLEAU = 7;			// Amount of tableaus
+	public final static int NUM_OF_TABLEAU = 7;			// Amount of tableaus
 
-    Table(MainActivity context){
-    	this.context = context;
-
+    Table(){
         baseDeck = new Deck();
         allCards = new ArrayList<>();
         talon = new Stack<>();
@@ -51,24 +37,16 @@ public class Table {
         tableaus = new ArrayList[7];
         waste = new Stack<>();
         score = 0;
-        loopTalon = new LinearLayout(context);
-        aCardIsSelected = false;
+        moveToWasteAmt = 3;
+		movedFromWaste = false;
 
         for(int i=0; i<4; i++){
-            foundations[i] = new Stack<CardLayout>();
+            foundations[i] = new Stack<Card>();
         }
 
         for(int i=0; i<NUM_OF_TABLEAU; i++){
-            tableaus[i] = new ArrayList<CardLayout>();
+            tableaus[i] = new ArrayList<Card>();
         }
-
-		viewWidth = context.getResources().getDisplayMetrics().widthPixels;
-		viewHeight = context.getResources().getDisplayMetrics().heightPixels;
-
-		if(viewWidth < viewHeight){
-			widthOfCard = viewWidth/(NUM_OF_TABLEAU+1);
-			heightOfCard = ((int) (widthOfCard * 1.5));
-		}
 
 		start();  // Sets up all the starting stuff
     }
@@ -87,7 +65,7 @@ public class Table {
          */
 
 
-		CardLayout cardLayout;
+		Card card;
 
 
         //  Shuffle --------------------------------------------------------------------------------
@@ -95,10 +73,9 @@ public class Table {
 
 		//	All cards ------------------------------------------------------------------------------
 		for(int i=0; i<52; i++){	//	All cards in allCards
-			cardLayout = new CardLayout(context);
-			cardLayout.setCard(baseDeck.getAllCards()[i]);
+			card = baseDeck.getAllCards()[i];
 
-			allCards.add(cardLayout);
+			allCards.add(card);
 		}
 
 
@@ -110,37 +87,21 @@ public class Table {
             // for each foundation
             foundations[i].clear();
         }
-		//	Placeholders in foundations
-		cardLayout = new CardLayout(context);
-		cardLayout.setCard(new Card('d',0));
-		foundations[0].add(cardLayout);
-		allCards.add(cardLayout);
-		cardLayout = new CardLayout(context);
-		cardLayout.setCard(new Card('h',0));
-		foundations[1].add(cardLayout);
-		allCards.add(cardLayout);
-		cardLayout = new CardLayout(context);
-		cardLayout.setCard(new Card('c',0));
-		foundations[2].add(cardLayout);
-		allCards.add(cardLayout);
-		cardLayout = new CardLayout(context);
-		cardLayout.setCard(new Card('s',0));
-		foundations[3].add(cardLayout);
-		allCards.add(cardLayout);
+
 
         //  Set tableaus ---------------------------------------------------------------------------
         for(int i=0, faceDownNum=0; i<NUM_OF_TABLEAU; i++, faceDownNum++){
             for(int j=0; j<faceDownNum; j++){   // facedown cards
-				cardLayout = talon.pop();
+				card = talon.pop();
 
-                tableaus[i].add(cardLayout);
+                tableaus[i].add(card);
             }
 
 			//  faceup card at bottom of each tableau
-			cardLayout = talon.pop();
-			cardLayout.getCard().setFaceUp(true);
+			card = talon.pop();
+			card.setFaceUp(true);
 
-			tableaus[i].add(cardLayout);
+			tableaus[i].add(card);
         }
 
         //  Clear the waste ------------------------------------------------------------------------
@@ -148,19 +109,24 @@ public class Table {
 
         //	Reset score ----------------------------------------------------------------------------
         score = 0;
-    }
 
-    public void flipCards(int amount){
+
+        //	Reset amount moved into Tableau at once ------------------------------------------------
+		moveToWasteAmt = 3;
+
+	}
+
+    public void moveToWaste(int amount){
 		// moves 'amount' of cards from talon to waste]
 
-    	CardLayout cardLayout;
+    	Card card;
 
     	for(int i=0; i<amount; i++){
     		if(!talon.empty()){	// if not empty
-				cardLayout = talon.pop();
-				cardLayout.getCard().setFaceUp(true);
+				card = talon.pop();
+				card.setFaceUp(true);
 
-    			waste.push(cardLayout);
+    			waste.push(card);
 			}
 		}
 	}
@@ -168,14 +134,23 @@ public class Table {
 	public void refillTalon(){
     	// Moves all cards from waste to talon
 
-		CardLayout cardLayout;
+		Card card;
 
     	while(!waste.empty()){	// if not empty
-			cardLayout = waste.pop();
-			cardLayout.getCard().setFaceUp(false);
+			card = waste.pop();
+			card.setFaceUp(false);
 
-    		talon.push(cardLayout);
+    		talon.push(card);
 		}
+
+
+		if(!movedFromWaste){
+    		moveToWasteAmt--;
+    		if(moveToWasteAmt<1){
+				moveToWasteAmt=1;
+			}
+		}
+		movedFromWaste = false;
 	}
 
 	public void setScore(int score) {
@@ -188,7 +163,7 @@ public class Table {
 		return score;
 	}
 
-	public boolean moveToTableau(CardLayout from, CardLayout to){
+	public boolean moveToTableau(Card from, Card to){
     	/*
     		PARAMS:	Card from:	card to try and move
     				Card to:	moving to here
@@ -200,15 +175,15 @@ public class Table {
     	 */
 
 
-    	final int SECTION = 0;
-    	final int COLUMN = 1;
-    	final int INDEX = 2;
+    	final int GET_SECTION = 0;
+    	final int GET_COLUMN = 1;
+    	final int GET_INDEX = 2;
 
 
 
 		int[] locationOfFrom, locationOfTo;	//	Describe location of each
-		List<CardLayout> subList;
-		CardLayout cardLayout;
+		List<Card> subList;
+		Card card;
 
 		locationOfFrom = findCard(from);
 		locationOfTo = findCard(to);
@@ -218,32 +193,32 @@ public class Table {
 
 
 
-    	if(from.getCard().isRed()==to.getCard().isRed()){
+    	if(from.isRed()==to.isRed()){
     		// Both are same color
 			// Not valid
 			return false;
 		}
-		if(to.getCard().getValue()-1 != from.getCard().getValue()){
+		if(to.getValue()-1 != from.getValue()){
     		// Card is not next in order for location
 			// Not valid
 			return false;
 		}
-		if(!to.getCard().isFaceUp() || !from.getCard().isFaceUp()){
+		if(!to.isFaceUp() || !from.isFaceUp()){
     		// Either card is not face up
 			// Not valid
 			return false;
 		}
-		if(locationOfTo[SECTION] == CardLayout.IN_TALON){
+		if(locationOfTo[GET_SECTION] == Card.IN_TALON){
 			// Can't move to Talon
 			// Not valid
 			return false;
 		}
-		if(locationOfTo[SECTION] == CardLayout.IN_WASTE){
+		if(locationOfTo[GET_SECTION] == Card.IN_WASTE){
     		// Can't move to Waste
 			// Not valid
 			return false;
 		}
-		if(locationOfTo[SECTION] == CardLayout.IN_FOUNDATIONS){
+		if(locationOfTo[GET_SECTION] == Card.IN_FOUNDATIONS){
     		// Can't move to Foundation
 			// Not valid
 			return false;
@@ -253,46 +228,50 @@ public class Table {
 			// Not valid
 			return false;
 		}
+		if(locationOfFrom[GET_SECTION] == Card.IN_WASTE){
+    		movedFromWaste = true;
+		}
 
 
 		//------------------------------------------------------------------------------------------
 		// Move is valid
 		// Now do it
 
-		switch (locationOfFrom[SECTION]){
-			case CardLayout.IN_TALON:	//	FROM TALON
+		switch (locationOfFrom[GET_SECTION]){
+			case Card.IN_TALON:	//	FROM TALON
 				// Can't move directly from Talon!
 				// Call move from Talon to Waste
-				flipCards(3);
+				moveToWaste(3);
 				break;
-			case CardLayout.IN_WASTE:	//	FROM WASTE
+			case Card.IN_WASTE:	//	FROM WASTE
 				//	Remove
 				waste.remove(from);
 
-				tableaus[locationOfTo[COLUMN]].add(from);
+				tableaus[locationOfTo[GET_COLUMN]].add(from);
 				break;
-			case CardLayout.IN_TABLEAUS:	//	FROM TABLEAU
+			case Card.IN_TABLEAUS:	//	FROM TABLEAU
 				//	Remove
-				tableaus[locationOfFrom[COLUMN]].remove(from);
-				tableaus[locationOfTo[COLUMN]].add(from);
+				tableaus[locationOfFrom[GET_COLUMN]].remove(from);
+				tableaus[locationOfTo[GET_COLUMN]].add(from);
 
-				while(locationOfFrom[INDEX] < tableaus[locationOfFrom[COLUMN]].size()){
-					cardLayout = tableaus[locationOfFrom[COLUMN]].remove(locationOfFrom[INDEX]);
-					tableaus[locationOfTo[COLUMN]].add(cardLayout);
+				// Move entire sublist, card selected and below...
+				while(locationOfFrom[GET_INDEX] < tableaus[locationOfFrom[GET_COLUMN]].size()){
+					card = tableaus[locationOfFrom[GET_COLUMN]].remove(locationOfFrom[GET_INDEX]);
+					tableaus[locationOfTo[GET_COLUMN]].add(card);
 				}
 
 				try{
-					tableaus[locationOfFrom[COLUMN]].get(tableaus[locationOfFrom[COLUMN]].size()-1).getCard().setFaceUp(true);
+					tableaus[locationOfFrom[GET_COLUMN]].get(tableaus[locationOfFrom[GET_COLUMN]].size()-1).setFaceUp(true);
 				}catch (Exception e){
 					// Exception b/c out of bounds
 				}
 
 				break;
-			case CardLayout.IN_FOUNDATIONS:	//	FROM FOUNDATIONS
+			case Card.IN_FOUNDATIONS:	//	FROM FOUNDATIONS
 				//	Remove
-				foundations[locationOfFrom[COLUMN]].remove(from);
+				foundations[locationOfFrom[GET_COLUMN]].remove(from);
 
-				tableaus[locationOfTo[COLUMN]].add(from);
+				tableaus[locationOfTo[GET_COLUMN]].add(from);
 
 				break;
 		}
@@ -301,67 +280,129 @@ public class Table {
 		return true;
 	}
 
-	private boolean tryMoveToFoundations(CardLayout card){
-		final int SECTION = 0;
-		final int COLUMN = 1;
-		final int INDEX = 2;
+	public boolean tryMoveToFoundations(Card card){
+		final int GET_SECTION = 0;		// Just some tags for readability
+		final int GET_COLUMN = 1;
+		final int GET_INDEX = 2;
 
 		int[] location;
+		boolean movedIt;
 
 		location = findCard(card);
+		movedIt = false;
 
-		// ACES
-		if(card.getCard().getValue() == 1){
-			// Remove from old location
-			switch (location[SECTION]){
-				case 0:	//	Talon
-					talon.remove(card);
-					break;
-				case 1:	//	Waste
-					waste.remove(card);
-					break;
-				case 2:	//	Tableaus
-					tableaus[location[COLUMN]].remove(card);
-					break;
-				case 3:	//	Foundations
-					foundations[location[COLUMN]].remove(card);
-					break;
-			}
-
-			// Flip new top card
-			try{
-				tableaus[location[COLUMN]].get(tableaus[location[COLUMN]].size()-1).getCard().setFaceUp(true);
-			}catch (Exception e){
-				// Exception b/c out of bounds
-			}
-
-			// Move it!
-			switch (card.getCard().getSuit()){
-				case 'd':
+		switch (card.getSuit()) {
+			case 'd':
+				// IF: Next in column or Ace
+				if (card.getValue()==1) {
+					// Move it
 					foundations[0].add(card);
-					break;
-				case 'h':
+					// Set flag to do other needed stuff
+					movedIt = true;
+				}else{
+					try {
+						if(card.getValue() == foundations[0].get(foundations[0].size() - 1).getValue() + 1){
+							// Move it
+							foundations[0].add(card);
+							// Set flag to do other needed stuff
+							movedIt = true;
+						}
+					}catch (ArrayIndexOutOfBoundsException e){
+						// Empty and not 1
+					}
+				}
+				break;
+			case 'h':
+				// IF: Next in column or Ace
+				if (card.getValue()==1) {
+					// Move it
 					foundations[1].add(card);
-					break;
-				case 'c':
+					// Set flag to do other needed stuff
+					movedIt = true;
+				}else{
+					try {
+						if(card.getValue() == foundations[1].get(foundations[1].size() - 1).getValue() + 1){
+							// Move it
+							foundations[1].add(card);
+							// Set flag to do other needed stuff
+							movedIt = true;
+						}
+					}catch (ArrayIndexOutOfBoundsException e){
+						// Empty and not 1
+					}
+				}
+				break;
+			case 'c':
+				// IF: Next in column or Ace
+				if (card.getValue()==1) {
+					// Move it
 					foundations[2].add(card);
-					break;
-				case 's':
+					// Set flag to do other needed stuff
+					movedIt = true;
+				}else{
+					try {
+						if(card.getValue() == foundations[2].get(foundations[2].size() - 1).getValue() + 1){
+							// Move it
+							foundations[2].add(card);
+							// Set flag to do other needed stuff
+							movedIt = true;
+						}
+					}catch (ArrayIndexOutOfBoundsException e){
+						// Empty and not 1
+					}
+				}
+				break;
+			case 's':
+				// IF: Next in column or Ace
+				if (card.getValue()==1) {
+					// Move it
 					foundations[3].add(card);
-					break;
-			}
-
-			// face up
-			card.getCard().setFaceUp(true);
-
-			return true;
+					// Set flag to do other needed stuff
+					movedIt = true;
+				}else{
+					try {
+						if(card.getValue() == foundations[3].get(foundations[3].size() - 1).getValue() + 1){
+							// Move it
+							foundations[3].add(card);
+							// Set flag to do other needed stuff
+							movedIt = true;
+						}
+					}catch (ArrayIndexOutOfBoundsException e){
+						// Empty and not 1
+					}
+				}
+				break;
 		}
 
 
-		return false;
+		if(location[GET_SECTION] == Card.IN_WASTE){
+			movedFromWaste = true;
+		}
+
+		if(movedIt){
+			// Remove it
+			if(location[GET_SECTION] == Card.IN_TABLEAUS) {
+				tableaus[location[GET_COLUMN]].remove(card);
+			}else if(location[GET_SECTION] == Card.IN_WASTE){
+				waste.remove(card);
+			}
+			// Flip new top of column in tableau
+			try{
+				tableaus[location[GET_COLUMN]].get(tableaus[location[GET_COLUMN]].size()-1).setFaceUp(true);
+			}catch (Exception e){
+				// Exception b/c out of bounds
+				// Not big deal, column is just now empty
+			}
+			// face up
+			card.setFaceUp(true);
+
+			return true;
+		}else{
+			return false;
+		}
 	}
 
-	private int[] findCard(CardLayout card){
+	public int[] findCard(Card card){
     	/*
     		Returns an int[2] describing the location of card
     			[0]	->	Which part of the table it is in: talon, waste, tableau, or foundation
@@ -373,244 +414,47 @@ public class Table {
 
     	// In talon
 		if(talon.contains(card)){
-			return new int[]{CardLayout.IN_TALON, -1, talon.indexOf(card)};
+			return new int[]{Card.IN_TALON, -1, talon.indexOf(card)};
 		}
 
 		// In waste
 		if(waste.contains(card)){
-			return new int[]{CardLayout.IN_WASTE, -1, waste.indexOf(card)};
+			return new int[]{Card.IN_WASTE, -1, waste.indexOf(card)};
 		}
 
 		// In tableaus
 		for(int i=0; i<NUM_OF_TABLEAU; i++){
 			if(tableaus[i].contains(card)){
-				return new int[]{CardLayout.IN_TABLEAUS, i, tableaus[i].indexOf(card)};
+				return new int[]{Card.IN_TABLEAUS, i, tableaus[i].indexOf(card)};
 			}
 		}
 
 		// In foundations
 		for(int i=0; i<NUM_OF_TABLEAU; i++){
 			if(foundations[i].contains(card)){
-				return new int[]{CardLayout.IN_FOUNDATIONS, i, foundations[i].indexOf(card)};
+				return new int[]{Card.IN_FOUNDATIONS, i, foundations[i].indexOf(card)};
 			}
 		}
 
 		return new int[]{-1,-1,-1};	//	Fail to find
 	}
 
-
-	public ArrayList<CardLayout>[] getTableaus() {
+	public ArrayList<Card>[] getTableaus() {
 		return tableaus;
 	}
-	public Stack<CardLayout> getTalon() {
+	public Stack<Card> getTalon() {
 		return talon;
 	}
-	public Stack<CardLayout> getWaste() {
+	public Stack<Card> getWaste() {
 		return waste;
 	}
-	public Stack<CardLayout>[] getFoundations() {
+	public Stack<Card>[] getFoundations() {
 		return foundations;
 	}
-
-	public void draw(){
-		Iterator<CardLayout> iter;
-		CardLayout cardLayout;
-		RelativeLayout.LayoutParams relativeParams;
-		int moveHorz = 0;
-		int moveVert = 0;
-		int margin = ((viewWidth-NUM_OF_TABLEAU*widthOfCard)-dpToPx(20))/(NUM_OF_TABLEAU);
-
-		// CLEAR
-		iter = allCards.iterator();
-		while (iter.hasNext()){
-			cardLayout = iter.next();
-			((RelativeLayout)(context).findViewById(R.id.loc_talon)).removeView(cardLayout);
-			((RelativeLayout)(context).findViewById(R.id.loc_waste)).removeView(cardLayout);
-			((RelativeLayout)(context).findViewById(R.id.loc_tableaus)).removeView(cardLayout);
-			((RelativeLayout)(context).findViewById(R.id.loc_foundations)).removeView(cardLayout);
-		}
-
-		// Placeholder under Talon to loop when empty
-		((RelativeLayout)(context).findViewById(R.id.loc_talon)).removeView(loopTalon);
-		relativeParams = new RelativeLayout.LayoutParams(widthOfCard, heightOfCard);
-		relativeParams.addRule(RelativeLayout.ALIGN_TOP, R.id.loc_talon);
-		relativeParams.addRule(RelativeLayout.ALIGN_START, R.id.loc_talon);
-		((RelativeLayout)(context).findViewById(R.id.loc_talon)).addView(loopTalon, relativeParams);
-		loopTalon.setOnClickListener(new loopTalonHandler(this));
-
-
-		//	Draw Talon
-		iter = talon.iterator();
-		while(iter.hasNext()){
-			cardLayout = iter.next();
-			cardLayout.drawCard(widthOfCard, heightOfCard);
-
-			relativeParams = new RelativeLayout.LayoutParams(widthOfCard, heightOfCard);
-			relativeParams.addRule(RelativeLayout.ALIGN_TOP, R.id.loc_talon);
-			relativeParams.addRule(RelativeLayout.ALIGN_START, R.id.loc_talon);
-
-			((RelativeLayout)(context).findViewById(R.id.loc_talon)).addView(cardLayout, relativeParams);
-
-			cardLayout.setOnClickListener(new fromTalonHandler(this));
-		}
-
-
-		//	Draw Waste
-		iter = waste.iterator();
-		while(iter.hasNext()){
-			cardLayout = iter.next();
-			cardLayout.drawCard(widthOfCard, heightOfCard);
-
-			relativeParams = new RelativeLayout.LayoutParams(widthOfCard, heightOfCard);
-			relativeParams.addRule(RelativeLayout.ALIGN_TOP, R.id.loc_waste);
-			relativeParams.addRule(RelativeLayout.ALIGN_START, R.id.loc_waste);
-
-			((RelativeLayout)(context).findViewById(R.id.loc_waste)).addView(cardLayout, relativeParams);
-
-			cardLayout.setOnClickListener(new fromTableauHandler(this));
-		}
-
-
-		//	Draw Tableaus
-		for(int i=0; i<NUM_OF_TABLEAU; i++){
-			iter = tableaus[i].iterator();
-
-			moveVert=0;
-
-			while(iter.hasNext()){
-				cardLayout = iter.next();
-				cardLayout.drawCard(widthOfCard, heightOfCard);
-
-				relativeParams = new RelativeLayout.LayoutParams(widthOfCard, heightOfCard);
-
-				relativeParams.addRule(RelativeLayout.ALIGN_TOP, R.id.loc_tableaus);
-				relativeParams.addRule(RelativeLayout.ALIGN_START, R.id.loc_tableaus);
-
-				relativeParams.leftMargin = moveHorz;
-				relativeParams.topMargin = moveVert;
-
-				((RelativeLayout)(context).findViewById(R.id.loc_tableaus)).addView(cardLayout, relativeParams);
-
-				cardLayout.setOnClickListener(new fromTableauHandler(this));
-
-				moveVert += dpToPx(20);
-			}
-
-			moveHorz+=widthOfCard+margin;
-		}
-
-
-		// Draw Foundations
-		moveHorz=0;
-		for(int i=0; i<4; i++){
-			iter = foundations[i].iterator();
-			while(iter.hasNext()){
-				cardLayout = iter.next();
-				cardLayout.drawCard(widthOfCard, heightOfCard);
-
-				relativeParams = new RelativeLayout.LayoutParams(widthOfCard, heightOfCard);
-
-				relativeParams.addRule(RelativeLayout.ALIGN_TOP, R.id.loc_foundations);
-				relativeParams.addRule(RelativeLayout.ALIGN_LEFT);
-
-				relativeParams.leftMargin = moveHorz;
-
-				((RelativeLayout)(context).findViewById(R.id.loc_foundations)).addView(cardLayout, relativeParams);
-
-				cardLayout.setOnClickListener(new fromTableauHandler(this));
-
-			}
-
-			moveHorz+=(widthOfCard+margin);
-		}
-    }
-
-	private int dpToPx(int dp) {
-		DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-		return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+	public ArrayList<Card> getAllCards() {
+		return allCards;
 	}
-
-	public class fromTableauHandler implements View.OnClickListener{
-    	Table table;
-
-    	public fromTableauHandler(Table table) {
-    		this.table = table;
-    	}
-
-		@Override
-		public void onClick(View v) {
-    		if(tryMoveToFoundations((CardLayout)v)  &&  ((CardLayout)v).getCard().isFaceUp()){
-    			draw();
-    			return;
-			}
-
-    		if(!aCardIsSelected){	//	No card to selected to move yet.  Select one
-				moveCard = (CardLayout)v;
-
-				aCardIsSelected = true;
-
-				if(MainActivity.DEBUG_FLAG){
-					Log.d("SELECT", moveCard.getCard().toString());
-				}
-
-			}else{	//	We have already selected the card, now move it
-				toHere = (CardLayout)v;
-
-				aCardIsSelected = false;
-
-
-
-				if(!moveToTableau(moveCard, toHere)){
-					moveCard = toHere;
-					aCardIsSelected = true;
-
-					if(MainActivity.DEBUG_FLAG){
-						Log.d("SELECT", moveCard.getCard().toString());
-					}
-
-				}else{
-					if(MainActivity.DEBUG_FLAG) {
-						Log.d("LOCATION", toHere.getCard().toString());
-					}
-					draw();
-				}
-			}
-
-
-			if(MainActivity.DEBUG_FLAG){
-				Log.d("CARD_PRESS", ""+v.getId());
-			}
-		}
+	public int getMoveToWasteAmt() {
+		return moveToWasteAmt;
 	}
-
-	public class fromTalonHandler implements View.OnClickListener{
-		Table table;
-
-		public fromTalonHandler(Table table) {
-			this.table = table;
-		}
-
-		@Override
-		public void onClick(View v) {
-			flipCards(3);
-			draw();
-		}
-	}
-
-	public class loopTalonHandler implements View.OnClickListener{
-		Table table;
-
-		public loopTalonHandler(Table table) {
-			this.table = table;
-		}
-
-		@Override
-		public void onClick(View v) {
-			refillTalon();
-			draw();
-		}
-	}
-
-
-
 }

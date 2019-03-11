@@ -1,6 +1,12 @@
 package com.utopple.code.klondike;
 
 public class Card{
+    public static final int IN_TALON=0;
+    public static final int IN_WASTE=1;
+    public static final int IN_TABLEAUS=2;
+    public static final int IN_FOUNDATIONS=3;
+
+
     private char suit;
     private boolean red;
     private int value;

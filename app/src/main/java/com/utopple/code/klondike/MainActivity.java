@@ -13,10 +13,12 @@ import java.util.Iterator;
 
 
 public class MainActivity extends AppCompatActivity {
-	public static boolean DEBUG_FLAG = false;
-	private static boolean BEGUN = false;
+	public final static boolean DEBUG_FLAG = false;
 
-	Table table;
+
+	private boolean BEGUN = false;
+	private TableDraw tableDraw;
+	private Table table;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,21 +27,24 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        if(!BEGUN){	//	No game yet, just started
+			table = new Table();
+			BEGUN = true;
+		}
 
-		table = new Table(this);
-      	table.draw();
+		tableDraw = new TableDraw(table, this);
+        tableDraw.draw();
 
-		Log.d("Nooooooooo", "onCreate: TURNED SCREEN DOOM");
 
-		// DEBUG Button
 
+		// DEBUGing
 		if(!DEBUG_FLAG){
-			findViewById(R.id.fab).setVisibility(View.GONE);
+			findViewById(R.id.fab).setVisibility(View.GONE);		//	Hide button
 
-			findViewById(R.id.loc_talon).setBackgroundColor(0x00000000);
-			findViewById(R.id.loc_waste).setBackgroundColor(0x00000000);
-			findViewById(R.id.loc_tableaus).setBackgroundColor(0x00000000);
-			findViewById(R.id.loc_foundations).setBackgroundColor(0x00000000);
+			findViewById(R.id.loc_talon).setBackgroundColor(0x00000000);		//	Remove background colors
+			findViewById(R.id.loc_waste).setBackgroundColor(0x00000000);		//	Remove background colors
+			findViewById(R.id.loc_tableaus).setBackgroundColor(0x00000000);		//	Remove background colors
+			findViewById(R.id.loc_foundations).setBackgroundColor(0x00000000);	//	Remove background colors
 
 		}
 
@@ -47,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-				Iterator<CardLayout> iter;
+				Iterator<Card> iter;
 
                 Log.d("TABLEAUS","---------------------------------------------------------------------------");
 				for(int i=0; i<7; i++){
@@ -55,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 					// Prints all the tableau set up
 					iter = table.getTableaus()[i].iterator();
 					while(iter.hasNext()){
-						Card current = iter.next().getCard();
+						Card current = iter.next();
 						Log.d("TABLEAUS", ""+current.toString()+"::"+current.isFaceUp());
 					}
 				}
@@ -66,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 					// Prints all the tableau set up
 					iter = table.getFoundations()[i].iterator();
 					while(iter.hasNext()){
-						Card current = iter.next().getCard();
+						Card current = iter.next();
 						Log.d("FOUNDATIONS", ""+current.toString()+"::"+current.isFaceUp());
 					}
 				}
@@ -74,14 +79,14 @@ public class MainActivity extends AppCompatActivity {
 				Log.d("TALON","---------------------------------------------------------------------------");
 				iter = table.getTalon().iterator();
 				while(iter.hasNext()){
-					Card current = iter.next().getCard();
+					Card current = iter.next();
 					Log.d("TALON", ""+current.toString()+"::"+current.isFaceUp());
 				}
 
 				Log.d("WASTE","---------------------------------------------------------------------------");
 				iter = table.getWaste().iterator();
 				while(iter.hasNext()){
-					Card current = iter.next().getCard();
+					Card current = iter.next();
 					Log.d("WASTE", ""+current.toString()+"::"+current.isFaceUp());
 				}
             }
