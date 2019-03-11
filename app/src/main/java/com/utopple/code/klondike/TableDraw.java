@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Stack;
 
-import static android.content.ContentValues.TAG;
-
 public class TableDraw {
 	private static int viewWidth;		// Width of screen (px)
 	private static int viewHeight;		// Height of screen (px)
@@ -65,8 +63,6 @@ public class TableDraw {
 		RelativeLayout.LayoutParams relativeParams;
 		int margin, moveHorz, moveVert;
 
-		moveHorz = 0;	//	move left or right as needed
-		moveVert = 0;	//	mve up or down
 		emptyCells = new LinearLayout[Table.NUM_OF_TABLEAU];
 
 

@@ -163,7 +163,7 @@ public class Table {
 		return score;
 	}
 
-	public boolean moveToTableau(Card card, int column){
+	public void moveToTableau(Card card, int column){
 		final int GET_SECTION = 0;
 		final int GET_COLUMN = 1;
 		final int GET_INDEX = 2;
@@ -175,7 +175,7 @@ public class Table {
 		if(!card.isFaceUp()){
 			// Card is not face up
 			// Not valid
-			return false;
+			return;
 		}
 		if(location[GET_SECTION] == Card.IN_WASTE){
 			// Removed from waste, set flag
@@ -193,7 +193,7 @@ public class Table {
 			// Exception b/c out of bounds
 		}
 
-		return true;
+		return;
 
 
 
@@ -218,7 +218,6 @@ public class Table {
 
 
 		int[] locationOfFrom, locationOfTo;	//	Describe location of each
-		List<Card> subList;
 		Card card;
 
 		locationOfFrom = findCard(from);
