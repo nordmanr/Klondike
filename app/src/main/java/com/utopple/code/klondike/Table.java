@@ -1,14 +1,7 @@
 package com.utopple.code.klondike;
 
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
-import android.widget.RelativeLayout;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Stack;
 
 
