@@ -163,6 +163,42 @@ public class Table {
 		return score;
 	}
 
+	public boolean moveToTableau(Card card, int column){
+		final int GET_SECTION = 0;
+		final int GET_COLUMN = 1;
+		final int GET_INDEX = 2;
+
+    	int[] location;
+
+    	location = findCard(card);
+
+		if(!card.isFaceUp()){
+			// Card is not face up
+			// Not valid
+			return false;
+		}
+		if(location[GET_SECTION] == Card.IN_WASTE){
+			// Removed from waste, set flag
+			movedFromWaste = true;
+		}
+
+		while(location[GET_INDEX] < tableaus[location[GET_COLUMN]].size()){
+			card = tableaus[location[GET_COLUMN]].remove(location[GET_INDEX]);
+			tableaus[column].add(card);
+		}
+
+		try{
+			tableaus[location[GET_COLUMN]].get(tableaus[location[GET_COLUMN]].size()-1).setFaceUp(true);
+		}catch (Exception e){
+			// Exception b/c out of bounds
+		}
+
+		return true;
+
+
+
+	}
+
 	public boolean moveToTableau(Card from, Card to){
     	/*
     		PARAMS:	Card from:	card to try and move

@@ -10,16 +10,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Stack;
 
+import static android.content.ContentValues.TAG;
+
 public class TableDraw {
 	private static int viewWidth;		// Width of screen (px)
 	private static int viewHeight;		// Height of screen (px)
 	private static int widthOfCard = 50;		// Width of each card when drawn (in px)
 	private static int heightOfCard = 75;	// Height of each card when drawn (in px)
 
+
 	private static boolean aCardIsSelected;	// Flag to use when moving a card around between tableau
 	private static CardLayout moveCard;	// which card we are trying to move
 	private static CardLayout toHere;	// And to where we are moving it
-
 
 
 	private Table table;
@@ -59,11 +61,13 @@ public class TableDraw {
 		Iterator<CardLayout> iter;
 		CardLayout cardLayout;
 		LinearLayout loopTalon;
+		LinearLayout[] emptyCells;
 		RelativeLayout.LayoutParams relativeParams;
 		int margin, moveHorz, moveVert;
 
 		moveHorz = 0;	//	move left or right as needed
 		moveVert = 0;	//	mve up or down
+		emptyCells = new LinearLayout[Table.NUM_OF_TABLEAU];
 
 
 		//----------------------------------------------------------------------------------------//
@@ -80,7 +84,7 @@ public class TableDraw {
 		margin = ((viewWidth-Table.NUM_OF_TABLEAU*widthOfCard)-dpToPx(20))/(Table.NUM_OF_TABLEAU);	// Space between cards
 
 
-		// CLEAR OLD LAYOUTS
+		// CLEAR OLD LAYOUTS -----------------------------------------------------------------------
 		iter = allCardLayouts.iterator();
 		while (iter.hasNext()){
 			cardLayout = iter.next();
@@ -89,6 +93,7 @@ public class TableDraw {
 			((RelativeLayout)(context).findViewById(R.id.loc_tableaus)).removeView(cardLayout);
 			((RelativeLayout)(context).findViewById(R.id.loc_foundations)).removeView(cardLayout);
 		}
+
 
 		//----------------------------------------------------------------------------------------//
 		//						Set up the layouts from based on the table						  //
@@ -170,8 +175,23 @@ public class TableDraw {
 		//								Actual drawing to the screen							  //
 		//----------------------------------------------------------------------------------------//
 
+		for(int i=0; i<Table.NUM_OF_TABLEAU; i++){
+			((RelativeLayout)(context).findViewById(R.id.loc_talon)).removeView(emptyCells[i]);	// remove old
+		}
 
-
+		moveHorz = 0;
+		// Underneath tableaus for using "Free cell"
+		for(int i=0; i<Table.NUM_OF_TABLEAU; i++){
+			emptyCells[i] = new LinearLayout(context);
+			relativeParams = new RelativeLayout.LayoutParams(widthOfCard, heightOfCard);
+			relativeParams.addRule(RelativeLayout.ALIGN_TOP, R.id.loc_tableaus);
+			relativeParams.addRule(RelativeLayout.ALIGN_START, R.id.loc_tableaus);
+			relativeParams.leftMargin = moveHorz;
+			emptyCells[i].setBackgroundColor(0xffffff00);
+			((RelativeLayout)(context).findViewById(R.id.loc_tableaus)).addView(emptyCells[i], relativeParams);	//	add new
+			emptyCells[i].setOnClickListener(new emptyCellHandler(table, context, i));	// click listener
+			moveHorz+=widthOfCard+margin;
+		}
 
 		// Placeholder under Talon to loop when empty
 		((RelativeLayout)(context).findViewById(R.id.loc_talon)).removeView(loopTalon);	// remove old
@@ -214,6 +234,7 @@ public class TableDraw {
 		}
 
 
+		moveHorz = 0;
 		//	Draw Tableaus
 		for(int i=0; i<Table.NUM_OF_TABLEAU; i++){
 			iter = tableauLayouts[i].iterator();
@@ -335,6 +356,26 @@ public class TableDraw {
 					draw();
 				}
 			}
+		}
+	}
+
+	public class emptyCellHandler implements View.OnClickListener{
+		Table table;
+		MainActivity context;
+		int col;
+
+		private emptyCellHandler(Table table, MainActivity context, int col) {
+			this.table = table;
+			this.context = context;
+			this.col = col;
+		}
+
+		@Override
+		public void onClick(View v) {
+			if(aCardIsSelected){
+				table.moveToTableau(moveCard.getCard(), col);
+			}
+			draw();
 		}
 	}
 
