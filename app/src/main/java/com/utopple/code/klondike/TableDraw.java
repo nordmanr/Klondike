@@ -1,6 +1,5 @@
 package com.utopple.code.klondike;
 
-import android.content.Context;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -24,7 +23,7 @@ public class TableDraw {
 
 
 	private Table table;
-	MainActivity context;
+	private MainActivity context;
 
 	private ArrayList<CardLayout> allCardLayouts;		// All CardLayouts
 	private Stack<CardLayout> talonLayouts;  			// CardLayouts for all the cards in the talon
@@ -32,7 +31,7 @@ public class TableDraw {
 	private ArrayList<CardLayout>[] tableauLayouts;	// CardLayouts for all the cards in the tableaus
 	private Stack<CardLayout> wasteLayouts;  			// CardLayouts for all the cards in the waste
 
-	public TableDraw(Table table, MainActivity context){
+	TableDraw(Table table, MainActivity context){
 		this.table = table;
 		this.context = context;
 
@@ -270,7 +269,7 @@ public class TableDraw {
 		Table table;
 		MainActivity context;
 
-		public fromTalonHandler(Table table, MainActivity context) {
+		private fromTalonHandler(Table table, MainActivity context) {
 			this.table = table;
 			this.context = context;
 		}
@@ -286,7 +285,7 @@ public class TableDraw {
 		Table table;
 		MainActivity context;
 
-		public fromTableauHandler(Table table, MainActivity context) {
+		private fromTableauHandler(Table table, MainActivity context) {
 			this.table = table;
 			this.context = context;
 		}
@@ -343,7 +342,7 @@ public class TableDraw {
 		Table table;
 		MainActivity context;
 
-		public fromWasteHandler(Table table, MainActivity context) {
+		private fromWasteHandler(Table table, MainActivity context) {
 			this.table = table;
 			this.context = context;
 		}
@@ -369,7 +368,7 @@ public class TableDraw {
 		Table table;
 		MainActivity context;
 
-		public loopTalonHandler(Table table, MainActivity context) {
+		private loopTalonHandler(Table table, MainActivity context) {
 			this.table = table;
 			this.context = context;
 		}

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TableLayout;
 
 import java.util.Iterator;
 
@@ -17,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 	private boolean BEGUN = false;
-	private TableDraw tableDraw;
 	private Table table;
 
     @Override
@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+		TableDraw tableDraw;
 
         if(!BEGUN){	//	No game yet, just started
 			table = new Table();

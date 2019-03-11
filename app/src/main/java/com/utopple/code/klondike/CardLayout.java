@@ -27,7 +27,7 @@ public class CardLayout extends LinearLayout {
 		return card;
 	}
 
-	public CardLayout drawCard(int widthOfCard, int heightOfCard){
+	public void drawCard(int widthOfCard, int heightOfCard){
 		TextView label1,label2;
 		ImageView suitImage;
 		LinearLayout.LayoutParams suitLayout, cardLayout;
@@ -117,7 +117,5 @@ public class CardLayout extends LinearLayout {
 		this.setOrientation(LinearLayout.VERTICAL);
 
 		this.setLayoutParams(cardLayout);
-
-		return this;
 	}
 }
