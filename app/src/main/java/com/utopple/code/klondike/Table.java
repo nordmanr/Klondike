@@ -217,10 +217,6 @@ public class Table {
 		locationOfTo = findCard(to);
 
 
-		//TODO:  What if moving to 'free cell'?  Must account for that before everything else
-
-
-
     	if(from.isRed()==to.isRed()){
     		// Both are same color
 			// Not valid
@@ -318,6 +314,14 @@ public class Table {
 
 		location = findCard(card);
 		movedIt = false;
+
+		if(location[GET_SECTION] == Card.IN_TABLEAUS){
+			if(tableaus[location[GET_COLUMN]].size() != location[GET_INDEX]+1){
+				// Is it at the bottom of a tableau?
+				// if not
+				return false;
+			}
+		}
 
 		switch (card.getSuit()) {
 			case 'd':
