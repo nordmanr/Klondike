@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -292,7 +293,7 @@ public class TableDraw {
 		//----------------------------------------------------------------------------------------//
 
 		if(table.checkWin()){
-			//
+			Toast.makeText(context, "You win!", Toast.LENGTH_SHORT).show();
 		}
 	}
 

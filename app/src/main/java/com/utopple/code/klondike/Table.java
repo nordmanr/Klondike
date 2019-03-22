@@ -324,8 +324,6 @@ public class Table {
     		hasWon = true;
 		}
 
-		Log.d("won?", "checkWin: "+hasWon);
-
 		return hasWon;
 	}
 
