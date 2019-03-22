@@ -35,6 +35,8 @@ public class TableDraw {
 		this.table = table;
 		this.context = context;
 
+		viewWidth = 0;
+		viewHeight = 0;
 
 		allCardLayouts = new ArrayList<>();
 		talonLayouts = new Stack<>();

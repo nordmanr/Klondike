@@ -38,9 +38,6 @@ public class CardLayout extends LinearLayout {
 		suitLayout = new LinearLayout.LayoutParams(widthOfCard, (int)(heightOfCard *.45));
 		cardLayout = new LinearLayout.LayoutParams(widthOfCard, heightOfCard);
 
-		this.setId(card.convertToInt());	//	ID
-
-
 
 		label1.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);	//	Align
 		label1.setGravity(Gravity.END);

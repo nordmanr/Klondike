@@ -173,8 +173,15 @@ public class Table {
 		if(location[GET_SECTION] == Card.IN_WASTE){
 			// Removed from waste, set flag
 			movedFromWaste = true;
+
+			// from waste
+			card = waste.pop();
+			tableaus[column].add(card);
+
+			return;
 		}
 
+		// from tableau
 		while(location[GET_INDEX] < tableaus[location[GET_COLUMN]].size()){
 			card = tableaus[location[GET_COLUMN]].remove(location[GET_INDEX]);
 			tableaus[column].add(card);

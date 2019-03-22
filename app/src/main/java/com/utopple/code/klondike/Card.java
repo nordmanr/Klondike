@@ -112,13 +112,4 @@ public class Card{
     public boolean isFaceUp() {
         return faceUp;
     }
-
-	public int convertToInt(){
-		int equilvalentId = 0;
-
-		equilvalentId += ((int)suit)*100;
-		equilvalentId += value;
-
-    	return equilvalentId;
-	}
 }
