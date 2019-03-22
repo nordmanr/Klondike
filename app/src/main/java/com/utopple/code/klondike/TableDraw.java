@@ -185,7 +185,9 @@ public class TableDraw {
 			relativeParams.addRule(RelativeLayout.ALIGN_TOP, R.id.loc_tableaus);
 			relativeParams.addRule(RelativeLayout.ALIGN_START, R.id.loc_tableaus);
 			relativeParams.leftMargin = moveHorz;
-			emptyCells[i].setBackgroundColor(0xffffff00);
+			if(MainActivity.DEBUG_FLAG){
+				emptyCells[i].setBackgroundColor(0xffffff00);
+			}
 			((RelativeLayout)(context).findViewById(R.id.loc_tableaus)).addView(emptyCells[i], relativeParams);	//	add new
 			emptyCells[i].setOnClickListener(new emptyCellHandler(table, context, i));	// click listener
 			moveHorz+=widthOfCard+margin;
@@ -281,6 +283,16 @@ public class TableDraw {
 			}
 
 			moveHorz+=(widthOfCard+margin);
+		}
+
+
+
+		//----------------------------------------------------------------------------------------//
+		//										Won yet?										  //
+		//----------------------------------------------------------------------------------------//
+
+		if(table.checkWin()){
+			//
 		}
 	}
 

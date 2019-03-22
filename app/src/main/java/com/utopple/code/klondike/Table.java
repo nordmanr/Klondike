@@ -1,5 +1,7 @@
 package com.utopple.code.klondike;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
@@ -309,6 +311,22 @@ public class Table {
 
 		// Success
 		return true;
+	}
+
+	public boolean checkWin(){
+    	boolean hasWon = false;
+
+    	if(foundations[0].size() == 13       &&
+				foundations[1].size() == 13  &&
+				foundations[2].size() == 13  &&
+				foundations[3].size() == 13){
+    		/* All foundations have 14 cards (A thru K) */
+    		hasWon = true;
+		}
+
+		Log.d("won?", "checkWin: "+hasWon);
+
+		return hasWon;
 	}
 
 	public boolean tryMoveToFoundations(Card card){
