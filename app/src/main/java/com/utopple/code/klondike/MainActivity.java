@@ -16,8 +16,14 @@ public class MainActivity extends AppCompatActivity {
 	public final static boolean DEBUG_FLAG = false;
 
 
-	private boolean BEGUN = false;
 	private Table table;
+	private TableDraw tableDraw;
+
+	protected void reset(){
+		table.restart();
+		tableDraw = new TableDraw(table, this);
+		tableDraw.draw();
+	}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +32,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-		TableDraw tableDraw;
-
-        if(!BEGUN){	//	No game yet, just started
-			table = new Table();
-			BEGUN = true;
-		}
-
+		table = new Table();
 		tableDraw = new TableDraw(table, this);
         tableDraw.draw();
 
