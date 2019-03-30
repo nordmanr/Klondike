@@ -17,9 +17,9 @@ public class TalonArea extends DrawableArea {
 			currentCardLayout = cardLayouts.peek();
 
 			// set up card
-			currentCardLayout.drawCard(TableDraw.widthOfCard, TableDraw.heightOfCard);
+			currentCardLayout.drawCard(TableDrawer.widthOfCard, TableDrawer.heightOfCard);
 			// positioning
-			relativeParams = new RelativeLayout.LayoutParams(TableDraw.widthOfCard, TableDraw.heightOfCard);
+			relativeParams = new RelativeLayout.LayoutParams(TableDrawer.widthOfCard, TableDrawer.heightOfCard);
 			relativeParams.addRule(RelativeLayout.ALIGN_TOP);
 			relativeParams.addRule(RelativeLayout.ALIGN_START);
 

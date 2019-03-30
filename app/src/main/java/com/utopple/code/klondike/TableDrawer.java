@@ -61,7 +61,7 @@ public class TableDrawer {
 			currentCard = iter.next();
 			currentCardLayout = new CardLayout(context);
 			currentCardLayout.setCard(currentCard);
-			wasteArea.addCardLayout(currentCardLayout);
+			talonArea.addCardLayout(currentCardLayout);
 		}
 
 		for(int i=0; i<7; i++){
@@ -74,7 +74,7 @@ public class TableDrawer {
 			}
 		}
 
-		// Positioning on screen
+		// Positioning on screen	----------------------------------------------------------------
 
 		RelativeLayout.LayoutParams layoutParams;
 
@@ -104,6 +104,20 @@ public class TableDrawer {
 			layoutParams.leftMargin = margin;
 			foundationAreas[i].setLayoutParams(layoutParams);
 		}
+
+
+		// Draw cards	----------------------------------------------------------------------------
+		talonArea.updateDraw();
+		wasteArea.updateDraw();
+		for(int i=0; i<7; i++){
+			tableauAreas[i].updateDraw();
+		}
+		for(int i=0; i<4; i++){
+			foundationAreas[i].updateDraw();
+		}
+
+
+		// Clickable Areas added onto screen	----------------------------------------------------
 
 	}
 

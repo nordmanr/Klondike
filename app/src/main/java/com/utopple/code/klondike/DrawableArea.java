@@ -16,9 +16,9 @@ public class DrawableArea extends RelativeLayout {
 
 		// sizing ViewGroup.LayoutParams.WRAP_CONTENT
 		RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(TableDrawer.widthOfCard, ViewGroup.LayoutParams.WRAP_CONTENT);
+		this.setMinimumHeight(TableDrawer.heightOfCard);
 
 		if(MainActivity.DEBUG_FLAG){
-			relativeParams = new RelativeLayout.LayoutParams(TableDrawer.widthOfCard, TableDrawer.heightOfCard);
 			this.setBackgroundColor((int)(Math.random()*0xffffff)+0xff000000);
 		}
 
