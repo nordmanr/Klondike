@@ -2,11 +2,9 @@ package com.utopple.code.klondike;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import java.util.Arrays;
 import java.util.Iterator;
 
 
@@ -118,6 +116,19 @@ public class TableDrawer {
 
 
 		// Clickable Areas added onto screen	----------------------------------------------------
+		TalonClickableArea talonClickableArea;
+		talonClickableArea = new TalonClickableArea(context);
+
+		talonClickableArea.initializeClickable(this);
+
+		layoutParams = new RelativeLayout.LayoutParams(widthOfCard, heightOfCard);
+		layoutParams.addRule(RelativeLayout.ALIGN_START, talonArea.getId());
+		layoutParams.addRule(RelativeLayout.ALIGN_TOP, talonArea.getId());
+
+		talonClickableArea.setLayoutParams(layoutParams);
+
+		((RelativeLayout)context.findViewById(R.id.loc_talon)).addView(talonClickableArea);
+
 
 	}
 
@@ -132,19 +143,21 @@ public class TableDrawer {
 		}
 	}
 
-	private void moveCardLayout(CardLayout cardLayout, CardLayout toHere){
-		if(!table.moveToTableau(cardLayout.getCard(), toHere.getCard())){
-			// Invalid move
-			moveCard = toHere;
-		}else{
-			// Can move
-			moveCard = null;
-			int[] location = table.findCard(toHere.getCard());
-
-		}
+	public Table getTable(){
+		return table;
 	}
-
-
+	public TalonArea getTalonArea() {
+		return talonArea;
+	}
+	public WasteArea getWasteArea() {
+		return wasteArea;
+	}
+	public TableauArea[] getTableauAreas() {
+		return tableauAreas;
+	}
+	public FoundationArea[] getFoundationAreas() {
+		return foundationAreas;
+	}
 
 	private int dpToPx(Context context, int dp) {
 		DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();

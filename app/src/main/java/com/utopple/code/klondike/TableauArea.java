@@ -33,7 +33,6 @@ public class TableauArea extends DrawableArea {
 
 			// display card
 			addView(currentCardLayout, relativeParams);
-			currentCardLayout.setOnClickListener(new CardLayoutHandler());
 
 			// adjust for next card
 			moveVert += (TableDrawer.heightOfCard / 5);  // show top fifth of cards beneath top card

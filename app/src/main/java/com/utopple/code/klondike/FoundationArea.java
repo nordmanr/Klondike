@@ -25,7 +25,6 @@ public class FoundationArea extends DrawableArea {
 
 			// display card
 			addView(currentCardLayout, relativeParams);
-			currentCardLayout.setOnClickListener(new CardLayoutHandler());
 		}
 	}
 

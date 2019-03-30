@@ -3,7 +3,6 @@ package com.utopple.code.klondike;
 import android.content.Context;
 import android.widget.RelativeLayout;
 
-import java.util.Iterator;
 
 public class WasteArea extends DrawableArea {
 	public WasteArea(Context context) {
@@ -27,7 +26,6 @@ public class WasteArea extends DrawableArea {
 
 			// display card
 			addView(currentCardLayout, relativeParams);
-			currentCardLayout.setOnClickListener(new CardLayoutHandler());
 		}
 	}
 

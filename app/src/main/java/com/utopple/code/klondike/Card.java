@@ -6,10 +6,6 @@ public class Card{
     public static final int IN_TABLEAUS=2;
     public static final int IN_FOUNDATIONS=3;
 
-    public static final int SECTION = 0;
-    public static final int COLUMN = 1;
-    public static final int INDEX = 2;
-
     private char suit;
     private boolean red;
     private int value;

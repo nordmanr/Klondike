@@ -19,7 +19,7 @@ public class DrawableArea extends RelativeLayout {
 		this.setMinimumHeight(TableDrawer.heightOfCard);
 
 		if(MainActivity.DEBUG_FLAG){
-			this.setBackgroundColor((int)(Math.random()*0xffffff)+0xff000000);
+			this.setBackgroundColor(genRandomColor());
 		}
 
 		this.setLayoutParams(relativeParams);
@@ -41,6 +41,10 @@ public class DrawableArea extends RelativeLayout {
 
 	public void removeCardLayout(CardLayout cardLayout){
 		cardLayouts.remove(cardLayout);
+	}
+
+	public static int genRandomColor(){
+		return (int)(Math.random()*0xffffff + 0xff000000);
 	}
 
 }

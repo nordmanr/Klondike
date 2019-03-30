@@ -20,13 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 	private Table table;
-	private TableDraw tableDraw;
 
-	protected void reset(){
-		table.restart();
-		tableDraw = new TableDraw(table, this);
-		tableDraw.draw();
-	}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +47,6 @@ public class MainActivity extends AppCompatActivity {
 		}
 
         /*
-		table = new Table();
-		tableDraw = new TableDraw(table, this);
-        tableDraw.draw();
-
-
-
-
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
