@@ -12,16 +12,14 @@ import java.util.Iterator;
 import java.util.Stack;
 
 public class TableDraw {
-	private static int viewWidth;		// Width of screen (px)
+	private static int viewWidth;		// WidtTableDrawh of screen (px)
 	private static int viewHeight;		// Height of screen (px)
-	private static int widthOfCard = 50;		// Width of each card when drawn (in px)
-	private static int heightOfCard = 75;	// Height of each card when drawn (in px)
+	public static int widthOfCard = 50;		// Width of each card when drawn (in px)
+	public static int heightOfCard = 75;	// Height of each card when drawn (in px)
 
 
-	private static boolean aCardIsSelected;	// Flag to use when moving a card around between tableau
-	private static CardLayout moveCard;	// which card we are trying to move
-	private static CardLayout toHere;	// And to where we are moving it
-
+	public static boolean aCardIsSelected;	// Flag to use when moving a card around between tableau
+	public static CardLayout moveCard;	// which card we are trying to move
 
 	private Table table;
 	private MainActivity context;
@@ -55,7 +53,6 @@ public class TableDraw {
 
 
 	}
-
 
 
 	public void draw(){
@@ -256,7 +253,7 @@ public class TableDraw {
 
 				((RelativeLayout)(context).findViewById(R.id.loc_tableaus)).addView(cardLayout, relativeParams);
 
-				cardLayout.setOnClickListener(new fromTableauHandler(table,context));
+				cardLayout.setOnClickListener(new tableauHandler(table,context));
 
 				moveVert += dpToPx(20);
 			}
@@ -297,6 +294,23 @@ public class TableDraw {
 		}
 	}
 
+	private void moveCardLayout(CardLayout cardLayout, CardLayout toHere){
+		if(!table.moveToTableau(cardLayout.getCard(), toHere.getCard())){
+			// Invalid move
+			moveCard = toHere;
+			aCardIsSelected = true;
+		}else{
+			// Can move
+			aCardIsSelected = false;
+
+			int[] location = table.findCard(toHere.getCard());
+			wasteLayouts.remove(cardLayout);
+
+			tableauLayouts[location[1]].add(cardLayout);
+
+		}
+	}
+
 	public class fromTalonHandler implements View.OnClickListener{
 		Table table;
 		MainActivity context;
@@ -313,11 +327,11 @@ public class TableDraw {
 		}
 	}
 
-	public class fromTableauHandler implements View.OnClickListener{
+	public class tableauHandler implements View.OnClickListener{
 		Table table;
 		MainActivity context;
 
-		private fromTableauHandler(Table table, MainActivity context) {
+		private tableauHandler(Table table, MainActivity context) {
 			this.table = table;
 			this.context = context;
 		}
@@ -338,34 +352,11 @@ public class TableDraw {
 
 			if(!aCardIsSelected){	//	No card to selected to move yet.  Select one
 				moveCard = (CardLayout)v;
-
 				aCardIsSelected = true;
 
-				if(MainActivity.DEBUG_FLAG){
-					Log.d("SELECT", moveCard.getCard().toString());
-				}
-
 			}else{	//	We have already selected the card, now move it
-				toHere = (CardLayout)v;
-
+				moveCardLayout(moveCard, (CardLayout)v);
 				aCardIsSelected = false;
-
-
-
-				if(!table.moveToTableau(moveCard.getCard(), toHere.getCard())){	// if can't move
-					moveCard = toHere;
-					aCardIsSelected = true;
-
-					if(MainActivity.DEBUG_FLAG){
-						Log.d("SELECT", moveCard.getCard().toString());
-					}
-
-				}else{
-					if(MainActivity.DEBUG_FLAG) {
-						Log.d("LOCATION", toHere.getCard().toString());
-					}
-					draw();
-				}
 			}
 		}
 	}
@@ -433,8 +424,34 @@ public class TableDraw {
 	}
 
 
+	public class cardLayoutHandler implements View.OnClickListener{
+		/*
+			General handler for all cards
 
-	private int dpToPx(int dp) {
+		 */
+		Table table;
+		MainActivity context;
+
+		private cardLayoutHandler(Table table, MainActivity context) {
+			this.table = table;
+			this.context = context;
+		}
+
+		@Override
+		public void onClick(View v) {
+			if(aCardIsSelected){
+				moveCardLayout(moveCard, (CardLayout)v);
+				aCardIsSelected = false;
+			}else{
+				moveCard = (CardLayout)v;
+				aCardIsSelected = true;
+			}
+		}
+	}
+
+
+
+	public int dpToPx(int dp) {
 		DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
 		return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
 	}

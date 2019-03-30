@@ -28,6 +28,7 @@
         android:id="@+id/loc_waste"
         android:layout_toRightOf="@+id/loc_talon"
         android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:background="#ffff0000" />
 
@@ -42,7 +43,7 @@
         android:layout_marginEnd="10dp"
         android:background="#ff00ff00" />
 
-    <RelativeLayout
+`    <RelativeLayout
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:minHeight="@dimen/DEBUG_loc_height"
@@ -51,6 +52,8 @@
         android:layout_below="@+id/loc_talon"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="15dp"
-        android:background="#ff0000ff" />
+        android:background="#ff0000ff"
+        >
+    </RelativeLayout>
 
 </RelativeLayout>

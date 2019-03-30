@@ -1,7 +1,5 @@
 package com.utopple.code.klondike;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
@@ -316,11 +314,8 @@ public class Table {
 	public boolean checkWin(){
     	boolean hasWon = false;
 
-    	if(foundations[0].size() == 13       &&
-				foundations[1].size() == 13  &&
-				foundations[2].size() == 13  &&
-				foundations[3].size() == 13){
-    		/* All foundations have 14 cards (A thru K) */
+    	if(foundations[0].size()+foundations[1].size()+foundations[2].size()+foundations[3].size() == 52){
+    		/* 52 cards in foundations */
     		hasWon = true;
 		}
 
@@ -465,33 +460,7 @@ public class Table {
     			[2]	->	index of card
 
     	 */
-
-
-    	// In talon
-		if(talon.contains(card)){
-			return new int[]{Card.IN_TALON, -1, talon.indexOf(card)};
-		}
-
-		// In waste
-		if(waste.contains(card)){
-			return new int[]{Card.IN_WASTE, -1, waste.indexOf(card)};
-		}
-
-		// In tableaus
-		for(int i=0; i<NUM_OF_TABLEAU; i++){
-			if(tableaus[i].contains(card)){
-				return new int[]{Card.IN_TABLEAUS, i, tableaus[i].indexOf(card)};
-			}
-		}
-
-		// In foundations
-		for(int i=0; i<NUM_OF_TABLEAU; i++){
-			if(foundations[i].contains(card)){
-				return new int[]{Card.IN_FOUNDATIONS, i, foundations[i].indexOf(card)};
-			}
-		}
-
-		return new int[]{-1,-1,-1};	//	Fail to find
+		return new int[]{-1,-1,-1};
 	}
 
 	public ArrayList<Card>[] getTableaus() {

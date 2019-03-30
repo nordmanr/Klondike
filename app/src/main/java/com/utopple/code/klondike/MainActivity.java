@@ -8,12 +8,15 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.Iterator;
 
 
 public class MainActivity extends AppCompatActivity {
-	public final static boolean DEBUG_FLAG = false;
+	public final static boolean DEBUG_FLAG = true;
 
 
 	private Table table;
@@ -32,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-		table = new Table();
-		tableDraw = new TableDraw(table, this);
-        tableDraw.draw();
+        table = new Table();
+
+        TableDrawer td = new TableDrawer(table, this);
 
 
 
@@ -48,6 +51,15 @@ public class MainActivity extends AppCompatActivity {
 			findViewById(R.id.loc_foundations).setBackgroundColor(0x00000000);	//	Remove background colors
 
 		}
+
+        /*
+		table = new Table();
+		tableDraw = new TableDraw(table, this);
+        tableDraw.draw();
+
+
+
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 					Log.d("WASTE", ""+current.toString()+"::"+current.isFaceUp());
 				}
             }
-        });
+        });*/
     }
 
     @Override
