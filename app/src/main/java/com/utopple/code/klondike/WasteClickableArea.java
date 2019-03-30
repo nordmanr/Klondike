@@ -34,14 +34,15 @@ public class WasteClickableArea extends ClickableArea {
 		@Override
 		public void onClick(View v) {
 			try {
-				TableDrawer.moveCard = tableDrawer.getWasteArea().cardLayouts.peek();
+				// might be empty
+				TableDrawer.moveCard = tableDrawer.getWasteArea().peek();
 
 				if(MainActivity.DEBUG_FLAG){
-					Toast.makeText(getContext(), "Waste press\t"+tableDrawer.getWasteArea().cardLayouts.peek().getCard().toString(), Toast.LENGTH_SHORT).show();
+					Toast.makeText(getContext(), "Waste press: "+tableDrawer.getWasteArea().peek().getCard().toString(), Toast.LENGTH_SHORT).show();
 				}
 			}catch (EmptyStackException e){
 				if(MainActivity.DEBUG_FLAG){
-					Toast.makeText(getContext(), "Waste press\t"+e.toString(), Toast.LENGTH_SHORT).show();
+					Toast.makeText(getContext(), "Waste press: "+e.toString(), Toast.LENGTH_SHORT).show();
 				}
 			}
 

@@ -168,6 +168,39 @@ public class Table {
 		return hasWon;
 	}
 
+	public int[] findCard(Card card){
+    	/*
+    		Returns an int[2] describing the location of card
+    			[0]	->	Which part of the table it is in: talon, waste, tableau, or foundation
+    			[1]	->	in tableau or foundation, which column
+    			[2]	->	index of card
+
+    	 */
+
+    	// talon
+		if(talon.contains(card)){
+			return new int[]{0,-1,-1};
+		}
+		// waste
+		if(waste.contains(card)){
+			return new int[]{1,-1,-1};
+		}
+		// tableaus
+		for(int i=0; i<7; i++){
+			if(tableaus[i].contains(card)){
+				return new int[]{2,i,tableaus[i].indexOf(card)};
+			}
+		}
+		// foundations
+		for(int i=0; i<4; i++){
+			if(foundations[i].contains(card)){
+				return new int[]{3,i,foundations[i].indexOf(card)};
+			}
+		}
+
+		return new int[]{-1,-1,-1};
+	}
+
 	public ArrayList<Card>[] getTableaus() {
 		return tableaus;
 	}

@@ -39,8 +39,15 @@ public class DrawableArea extends RelativeLayout {
 		cardLayouts.add(cardLayout);
 	}
 
+	public void removeCardLayout(CardLayout cardLayout){
+		cardLayouts.remove(cardLayout);
+	}
+
 	public CardLayout pop(){
 		return cardLayouts.pop();
+	}
+	public CardLayout peek(){
+		return cardLayouts.peek();
 	}
 
 	public static int genRandomColor(){

@@ -144,6 +144,27 @@ public class TableDrawer {
 
 		((RelativeLayout)context.findViewById(R.id.loc_waste)).addView(wasteClickableArea);
 
+		// FOUNDATION AREAs
+		FoundationsClickableArea foundationsClickableArea;
+
+		foundationsClickableArea = new FoundationsClickableArea(context);
+		foundationsClickableArea.initializeClickable(this, 0);
+
+		for(int i=0; i<4; i++){
+			foundationsClickableArea = new FoundationsClickableArea(context);
+			foundationsClickableArea.initializeClickable(this, i);
+
+			layoutParams = new RelativeLayout.LayoutParams(widthOfCard, heightOfCard);
+			layoutParams.addRule(RelativeLayout.ALIGN_START, foundationAreas[i].getId());
+			layoutParams.addRule(RelativeLayout.ALIGN_TOP, foundationAreas[i].getId());
+			foundationsClickableArea.setLayoutParams(layoutParams);
+			((RelativeLayout)context.findViewById(R.id.loc_foundations)).addView(foundationsClickableArea);
+		}
+
+
+
+
+
 		//updateClickAreas();
 
 
