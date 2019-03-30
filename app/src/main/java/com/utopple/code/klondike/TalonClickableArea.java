@@ -26,7 +26,7 @@ public class TalonClickableArea extends ClickableArea {
 
 		private TableDrawer tableDrawer;
 
-		public TalonHandler(TableDrawer tableDrawer) {
+		TalonHandler(TableDrawer tableDrawer) {
 			this.tableDrawer = tableDrawer;
 		}
 
@@ -35,13 +35,13 @@ public class TalonClickableArea extends ClickableArea {
 			if(! tableDrawer.getTable().getTalon().isEmpty()){
 				tableDrawer.getTable().moveToWaste(tableDrawer.getTable().getMoveToWasteAmt());
 				for(int i=0; i<tableDrawer.getTable().getMoveToWasteAmt(); i++){
-					tableDrawer.getWasteArea().cardLayouts.add(tableDrawer.getTalonArea().cardLayouts.pop());
+					tableDrawer.getWasteArea().addCardLayout(tableDrawer.getTalonArea().pop());
 				}
 			}else{
 				tableDrawer.getTable().refillTalon();
 
 				while(! tableDrawer.getWasteArea().cardLayouts.isEmpty()){
-					tableDrawer.getTalonArea().cardLayouts.add(tableDrawer.getWasteArea().cardLayouts.pop());
+					tableDrawer.getTalonArea().addCardLayout(tableDrawer.getWasteArea().pop());
 				}
 			}
 
