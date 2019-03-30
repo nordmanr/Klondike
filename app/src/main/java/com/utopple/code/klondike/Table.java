@@ -168,17 +168,6 @@ public class Table {
 		return hasWon;
 	}
 
-	public int[] findCard(Card card){
-    	/*
-    		Returns an int[2] describing the location of card
-    			[0]	->	Which part of the table it is in: talon, waste, tableau, or foundation
-    			[1]	->	in tableau or foundation, which column
-    			[2]	->	index of card
-
-    	 */
-		return new int[]{-1,-1,-1};
-	}
-
 	public ArrayList<Card>[] getTableaus() {
 		return tableaus;
 	}

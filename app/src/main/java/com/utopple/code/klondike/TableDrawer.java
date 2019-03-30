@@ -116,6 +116,7 @@ public class TableDrawer {
 
 
 		// Clickable Areas added onto screen	----------------------------------------------------
+		// TALON AREA
 		TalonClickableArea talonClickableArea;
 		talonClickableArea = new TalonClickableArea(context);
 
@@ -129,12 +130,37 @@ public class TableDrawer {
 
 		((RelativeLayout)context.findViewById(R.id.loc_talon)).addView(talonClickableArea);
 
+		// WASTE AREA
+		WasteClickableArea wasteClickableArea;
+		wasteClickableArea = new WasteClickableArea(context);
+
+		wasteClickableArea.initializeClickable(this);
+
+		layoutParams = new RelativeLayout.LayoutParams(widthOfCard, heightOfCard);
+		layoutParams.addRule(RelativeLayout.ALIGN_START, wasteArea.getId());
+		layoutParams.addRule(RelativeLayout.ALIGN_TOP, wasteArea.getId());
+
+		wasteClickableArea.setLayoutParams(layoutParams);
+
+		((RelativeLayout)context.findViewById(R.id.loc_waste)).addView(wasteClickableArea);
+
+		//updateClickAreas();
+
 
 	}
 
 
-	public void draw(){
+	public void updateClickAreas(){
 
+
+
+		wasteArea.updateDraw();
+		for(int i=0; i<7; i++){
+			tableauAreas[i].updateDraw();
+		}
+		for(int i=0; i<4; i++){
+			foundationAreas[i].updateDraw();
+		}
 
 
 

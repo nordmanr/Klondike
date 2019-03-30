@@ -18,7 +18,6 @@ public class TalonClickableArea extends ClickableArea {
 		this.setOnClickListener(new TalonHandler(tableDrawer));
 	}
 
-
 	public class TalonHandler implements View.OnClickListener {
 	/*
 		Handler for the Talon
