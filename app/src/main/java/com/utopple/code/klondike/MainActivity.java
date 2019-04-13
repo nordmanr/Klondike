@@ -32,7 +32,18 @@ public class MainActivity extends AppCompatActivity {
 			findViewById(R.id.loc_talon).setBackgroundColor(0x00000000);		//	Remove background colors
 			findViewById(R.id.loc_waste).setBackgroundColor(0x00000000);		//	Remove background colors
 			findViewById(R.id.loc_tableaus).setBackgroundColor(0x00000000);		//	Remove background colors
+			findViewById(R.id.loc_tableau1).setBackgroundColor(0x00000000);		//	Remove background colors
+			findViewById(R.id.loc_tableau2).setBackgroundColor(0x00000000);		//	Remove background colors
+			findViewById(R.id.loc_tableau3).setBackgroundColor(0x00000000);		//	Remove background colors
+			findViewById(R.id.loc_tableau4).setBackgroundColor(0x00000000);		//	Remove background colors
+			findViewById(R.id.loc_tableau5).setBackgroundColor(0x00000000);		//	Remove background colors
+			findViewById(R.id.loc_tableau6).setBackgroundColor(0x00000000);		//	Remove background colors
+			findViewById(R.id.loc_tableau7).setBackgroundColor(0x00000000);		//	Remove background colors
 			findViewById(R.id.loc_foundations).setBackgroundColor(0x00000000);	//	Remove background colors
+			findViewById(R.id.loc_foundation1).setBackgroundColor(0x00000000);	//	Remove background colors
+			findViewById(R.id.loc_foundation2).setBackgroundColor(0x00000000);	//	Remove background colors
+			findViewById(R.id.loc_foundation3).setBackgroundColor(0x00000000);	//	Remove background colors
+			findViewById(R.id.loc_foundation4).setBackgroundColor(0x00000000);	//	Remove background colors
 
 		}
 

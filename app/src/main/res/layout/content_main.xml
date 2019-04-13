@@ -35,6 +35,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:id="@+id/loc_foundations"
         android:minHeight="@dimen/DEBUG_loc_height"
         android:minWidth="@dimen/DEBUG_loc_width"
         android:layout_marginTop="10dp"
@@ -87,6 +89,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/loc_talon"
+        android:id="@+id/loc_tableaus"
         android:minHeight="@dimen/DEBUG_loc_height"
         android:minWidth="@dimen/DEBUG_loc_width"
         android:layout_marginTop="10dp"
