@@ -11,38 +11,12 @@ public class TableauArea extends DrawableArea {
 	public TableauArea(Context context) {
 		super(context);
 		cardTapLayouts = new TableauStack();
-
-		/* Create cards
-		Iterator<CardTapLayout> iter;
-		CardTapLayout currentCard;
-		LayoutParams relativeParams;
-		int moveVert;
-
-		iter = this.cardTapLayouts.iterator();
-		moveVert = 0;
-
-		while (iter.hasNext()) {
-			// get next
-			currentCard = iter.next();
-
-			// set up card
-	//		currentCard.draw(TableDrawer.widthOfCard, TableDrawer.heightOfCard);
-			// postioning
-			relativeParams = new RelativeLayout.LayoutParams(TableDrawer.widthOfCard, TableDrawer.heightOfCard);
-			relativeParams.addRule(RelativeLayout.ALIGN_TOP);
-			relativeParams.addRule(RelativeLayout.ALIGN_START);
-			relativeParams.topMargin = moveVert;
-
-			// display card
-			addView(currentCard, relativeParams);
-
-			// adjust for next card
-			moveVert += (TableDrawer.heightOfCard / 5);  // show top fifth of cards beneath top card
-		}*/
 	}
 
-	public void addCard(CardTapLayout cardTapLayout){
-		cardTapLayouts.forcePush(cardTapLayout);
+	public CardTapLayout forcePush(CardTapLayout item){
+		this.addView(item);
+		alignView(item);
+		return cardTapLayouts.forcePush(item);
 	}
 
 	public List<CardTapLayout> popTo(CardTapLayout selected){
@@ -62,5 +36,13 @@ public class TableauArea extends DrawableArea {
 		while(iter.hasNext()){
 			push(iter.next());
 		}
+	}
+
+	private void alignView(CardTapLayout toAlign){
+		LayoutParams layoutParams = new LayoutParams(GLOBAL_VARS.widthOfCard, GLOBAL_VARS.heightOfCard);
+		layoutParams.addRule(ALIGN_PARENT_TOP);
+		layoutParams.topMargin = (cardTapLayouts.size()*(GLOBAL_VARS.heightOfCard/5));
+
+		toAlign.setLayoutParams(layoutParams);
 	}
 }

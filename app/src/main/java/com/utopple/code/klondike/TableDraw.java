@@ -72,12 +72,12 @@ public class TableDraw {
 		}
 
 		//talonArea.addView(rect);
-/*
+
 		for(int i=0; i<7; i++){
 			for(int j=0; j<=i; j++){
-				tableauAreas[i].addCard(talonArea.pop());
+				tableauAreas[i].forcePush(talonArea.pop());
 			}
-		}*/
+		}
 	}
 
 	public void refillTalon(){

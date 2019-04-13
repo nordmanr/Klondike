@@ -34,16 +34,6 @@ public class DrawableArea extends RelativeLayout {
 		cardTapLayouts = new Stack<>();
 	}
 
-	public void addCardLayout(CardTapLayout cardTapLayout){
-		this.addView(cardTapLayout);
-		cardTapLayouts.push(cardTapLayout);
-	}
-
-	public void removeCardLayout(CardTapLayout cardTapLayout){
-		this.removeView(cardTapLayout);
-		cardTapLayouts.remove(cardTapLayout);
-	}
-
 	public CardTapLayout pop(){
 		CardTapLayout popped = cardTapLayouts.pop();
 		this.removeView(popped);
