@@ -1,6 +1,7 @@
 package com.utopple.code.klondike;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
@@ -52,6 +53,15 @@ public class DrawableArea extends RelativeLayout {
 
 	public static int genRandomColor(){
 		return (int)(Math.random()*0xffffff + 0xff000000);
+	}
+
+	public static GradientDrawable genRandomColorBorder(){
+		GradientDrawable gd = new GradientDrawable();
+		gd.setColor(0x00000000); // Changes this drawbale to use a single color instead of a gradient
+		gd.setCornerRadius(0);
+		gd.setStroke(10, genRandomColor());
+
+		return gd;
 	}
 
 }
