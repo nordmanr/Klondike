@@ -1,7 +1,5 @@
 package com.utopple.code.klondike;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.Stack;
 
 public class TableauStack extends Stack<CardTapLayout> {
@@ -30,14 +28,5 @@ public class TableauStack extends Stack<CardTapLayout> {
 		return super.push(item);
 	}
 
-	@Override
-	public boolean addAll(Collection<? extends CardTapLayout> c) {
-		Iterator<? extends CardTapLayout> iter = c.iterator();
 
-		while(iter.hasNext()){
-			push(iter.next());
-		}
-
-		return true;
-	}
 }

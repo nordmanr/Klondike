@@ -2,18 +2,9 @@ package com.utopple.code.klondike;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-
-import com.utopple.code.klondike.oldCode.FoundationArea;
-import com.utopple.code.klondike.oldCode.TableauArea;
-import com.utopple.code.klondike.oldCode.TalonArea;
-import com.utopple.code.klondike.oldCode.WasteArea;
-
-import static android.widget.RelativeLayout.ALIGN_PARENT_LEFT;
-import static android.widget.RelativeLayout.ALIGN_PARENT_START;
-import static com.utopple.code.klondike.DrawableArea.genRandomColor;
+import java.util.Iterator;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class TableDraw {
@@ -43,7 +34,6 @@ public class TableDraw {
 		}
 
 		/* Positioning */
-
 		// Talon
 		((RelativeLayout) context.findViewById(R.id.loc_talon)).addView(talonArea);
 		// Waste
@@ -61,9 +51,43 @@ public class TableDraw {
 		((RelativeLayout) context.findViewById(R.id.loc_foundation2)).addView(foundationAreas[1]);
 		((RelativeLayout) context.findViewById(R.id.loc_foundation3)).addView(foundationAreas[2]);
 		((RelativeLayout) context.findViewById(R.id.loc_foundation4)).addView(foundationAreas[3]);
+
+		// Start game
+		restart();
 	}
 
 
+	private void restart(){
+		// Create CardTapLayouts from deck	--------------------------------------------------------
+		Deck deck = new Deck();
+		deck.shuffle();
+
+		CardTapLayout currentCardTapLayout;
+
+		// Create every card and put it in the Talon
+		for(int i=0; i<52; i++){
+			currentCardTapLayout = new CardTapLayout(context);
+			currentCardTapLayout.setCard(deck.getAllCards()[i]);
+			talonArea.push(currentCardTapLayout);
+		}
+
+		for(int i=0; i<7; i++){
+			for(int j=0; j<=i; j++){
+				tableauAreas[i].addCard(talonArea.pop());
+			}
+		}
+	}
+
+	public void refillTalon(){
+		Iterator<CardTapLayout> iter = wasteArea.cardTapLayouts.iterator();
+		CardTapLayout current;
+
+		while(iter.hasNext()){
+			iter.next();
+
+			talonArea.push(wasteArea.pop());
+		}
+	}
 
 	private void setSizing(){
 		// Sizing	--------------------------------------------------------------------------------

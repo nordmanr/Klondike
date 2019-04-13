@@ -6,10 +6,6 @@ import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.utopple.code.klondike.CardTapLayout;
-import com.utopple.code.klondike.MainActivity;
-import com.utopple.code.klondike.oldCode.TableDrawer;
-
 import java.util.Stack;
 
 public class DrawableArea extends RelativeLayout {
@@ -17,6 +13,7 @@ public class DrawableArea extends RelativeLayout {
 
 	public DrawableArea(Context context){
 		super(context);
+		cardTapLayouts = new Stack<>();
 
 		// sizing ViewGroup.LayoutParams.WRAP_CONTENT
 		RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(GLOBAL_VARS.widthOfCard, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -30,8 +27,6 @@ public class DrawableArea extends RelativeLayout {
 
 
 		setId(generateViewId());
-
-		cardTapLayouts = new Stack<>();
 	}
 	public DrawableArea(Context context, @Nullable AttributeSet attrs) {
 		super(context, attrs);
@@ -41,12 +36,24 @@ public class DrawableArea extends RelativeLayout {
 
 	public void addCardLayout(CardTapLayout cardTapLayout){
 		this.addView(cardTapLayout);
-		cardTapLayouts.add(cardTapLayout);
+		cardTapLayouts.push(cardTapLayout);
 	}
 
 	public void removeCardLayout(CardTapLayout cardTapLayout){
 		this.removeView(cardTapLayout);
 		cardTapLayouts.remove(cardTapLayout);
+	}
+
+	public CardTapLayout pop(){
+		CardTapLayout popped = cardTapLayouts.pop();
+		this.removeView(popped);
+
+		return popped;
+	}
+
+	public void push(CardTapLayout pushing){
+		this.addView(pushing);
+		cardTapLayouts.push(pushing);
 	}
 
 	public static int genRandomColor(){

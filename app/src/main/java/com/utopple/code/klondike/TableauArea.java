@@ -1,13 +1,9 @@
-package com.utopple.code.klondike.oldCode;
+package com.utopple.code.klondike;
 
 import android.content.Context;
-import android.widget.RelativeLayout;
-
-import com.utopple.code.klondike.CardTapLayout;
-import com.utopple.code.klondike.DrawableArea;
-import com.utopple.code.klondike.TableauStack;
 
 import java.util.Iterator;
+import java.util.List;
 
 public class TableauArea extends DrawableArea {
 	private TableauStack cardTapLayouts;
@@ -16,7 +12,7 @@ public class TableauArea extends DrawableArea {
 		super(context);
 		cardTapLayouts = new TableauStack();
 
-		/* Create cards */
+		/* Create cards
 		Iterator<CardTapLayout> iter;
 		CardTapLayout currentCard;
 		LayoutParams relativeParams;
@@ -42,10 +38,29 @@ public class TableauArea extends DrawableArea {
 
 			// adjust for next card
 			moveVert += (TableDrawer.heightOfCard / 5);  // show top fifth of cards beneath top card
-		}
+		}*/
 	}
 
 	public void addCard(CardTapLayout cardTapLayout){
-		cardTapLayouts.push(cardTapLayout);
+		cardTapLayouts.forcePush(cardTapLayout);
+	}
+
+	public List<CardTapLayout> popTo(CardTapLayout selected){
+		int index = cardTapLayouts.indexOf(selected);
+		List<CardTapLayout> list = cardTapLayouts.subList(0, index);
+
+		while(index < cardTapLayouts.size()){
+			this.removeView(cardTapLayouts.pop());
+		}
+
+		return list;
+	}
+
+	public void pushAll(List<CardTapLayout> pushList){
+		Iterator<CardTapLayout> iter = pushList.iterator();
+
+		while(iter.hasNext()){
+			push(iter.next());
+		}
 	}
 }
