@@ -26,7 +26,7 @@
         android:minHeight="@dimen/DEBUG_loc_height"
         android:minWidth="@dimen/DEBUG_loc_width"
         android:id="@+id/loc_waste"
-        android:layout_toRightOf="@+id/loc_talon"
+        android:layout_toEndOf="@+id/loc_talon"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -35,7 +35,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:baselineAligned="false"
+        android:layout_alignParentEnd="true"
         android:id="@+id/loc_foundations"
         android:minHeight="@dimen/DEBUG_loc_height"
         android:minWidth="@dimen/DEBUG_loc_width"
@@ -50,7 +51,6 @@
             android:minHeight="@dimen/DEBUG_loc_height"
             android:minWidth="@dimen/DEBUG_loc_width"
             android:id="@+id/loc_foundation1"
-            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:background="#ff66ff66"/>
         <RelativeLayout
@@ -60,7 +60,6 @@
             android:minHeight="@dimen/DEBUG_loc_height"
             android:minWidth="@dimen/DEBUG_loc_width"
             android:id="@+id/loc_foundation2"
-            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:background="#ff88ff88"/>
         <RelativeLayout
@@ -70,7 +69,6 @@
             android:minHeight="@dimen/DEBUG_loc_height"
             android:minWidth="@dimen/DEBUG_loc_width"
             android:id="@+id/loc_foundation3"
-            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:background="#ffaaffaa"/>
         <RelativeLayout
@@ -80,7 +78,6 @@
             android:minHeight="@dimen/DEBUG_loc_height"
             android:minWidth="@dimen/DEBUG_loc_width"
             android:id="@+id/loc_foundation4"
-            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:background="#ffccffcc"/>
     </LinearLayout>
@@ -89,6 +86,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         android:layout_below="@+id/loc_talon"
         android:id="@+id/loc_tableaus"
         android:minHeight="@dimen/DEBUG_loc_height"
@@ -104,7 +102,7 @@
             android:minHeight="@dimen/DEBUG_loc_height"
             android:minWidth="@dimen/DEBUG_loc_width"
             android:id="@+id/loc_tableau1"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
             android:background="#ff4444ff"/>
         <RelativeLayout
@@ -114,7 +112,7 @@
             android:minHeight="@dimen/DEBUG_loc_height"
             android:minWidth="@dimen/DEBUG_loc_width"
             android:id="@+id/loc_tableau2"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
             android:background="#ff6666ff"/>
         <RelativeLayout
@@ -124,7 +122,7 @@
             android:minHeight="@dimen/DEBUG_loc_height"
             android:minWidth="@dimen/DEBUG_loc_width"
             android:id="@+id/loc_tableau3"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
             android:background="#ff8888ff"/>
         <RelativeLayout
@@ -134,7 +132,7 @@
             android:minHeight="@dimen/DEBUG_loc_height"
             android:minWidth="@dimen/DEBUG_loc_width"
             android:id="@+id/loc_tableau4"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
             android:background="#ffaaaaff"/>
         <RelativeLayout
@@ -144,7 +142,7 @@
             android:minHeight="@dimen/DEBUG_loc_height"
             android:minWidth="@dimen/DEBUG_loc_width"
             android:id="@+id/loc_tableau5"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
             android:background="#ffccccff"/>
         <RelativeLayout
@@ -154,7 +152,7 @@
             android:minHeight="@dimen/DEBUG_loc_height"
             android:minWidth="@dimen/DEBUG_loc_width"
             android:id="@+id/loc_tableau6"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
             android:background="#ffeeeeff"/>
         <RelativeLayout
@@ -164,7 +162,7 @@
             android:minHeight="@dimen/DEBUG_loc_height"
             android:minWidth="@dimen/DEBUG_loc_width"
             android:id="@+id/loc_tableau7"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
             android:background="#ffffffff"/>
     </LinearLayout>
