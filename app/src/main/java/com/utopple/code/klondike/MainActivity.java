@@ -1,16 +1,20 @@
 package com.utopple.code.klondike;
 
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
 	public final static boolean DEBUG_FLAG = true;
 
+	public TableDraw draw;
 
 
     @Override
@@ -20,10 +24,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-		TableDraw draw = new TableDraw(this);
-
-
-
+		draw = new TableDraw(this);
 
 		// DEBUGing
 		if(!DEBUG_FLAG){
@@ -47,50 +48,14 @@ public class MainActivity extends AppCompatActivity {
 
 		}
 
-        /*
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-				Iterator<Card> iter;
-
-                Log.d("TABLEAUS","---------------------------------------------------------------------------");
-				for(int i=0; i<7; i++){
-					Log.d("TABLEAUS","COL"+i);
-					// Prints all the tableau set up
-					iter = table.getTableaus()[i].iterator();
-					while(iter.hasNext()){
-						Card current = iter.next();
-						Log.d("TABLEAUS", ""+current.toString()+"::"+current.isFaceUp());
-					}
-				}
-
-				Log.d("FOUNDATIONS","---------------------------------------------------------------------------");
-				for(int i=0; i<4; i++){
-					Log.d("FOUNDATIONS","FOUNDATION"+i);
-					// Prints all the tableau set up
-					iter = table.getFoundations()[i].iterator();
-					while(iter.hasNext()){
-						Card current = iter.next();
-						Log.d("FOUNDATIONS", ""+current.toString()+"::"+current.isFaceUp());
-					}
-				}
-
-				Log.d("TALON","---------------------------------------------------------------------------");
-				iter = table.getTalon().iterator();
-				while(iter.hasNext()){
-					Card current = iter.next();
-					Log.d("TALON", ""+current.toString()+"::"+current.isFaceUp());
-				}
-
-				Log.d("WASTE","---------------------------------------------------------------------------");
-				iter = table.getWaste().iterator();
-				while(iter.hasNext()){
-					Card current = iter.next();
-					Log.d("WASTE", ""+current.toString()+"::"+current.isFaceUp());
-				}
+				draw.tableauAreas[0].push(draw.tableauAreas[4].pop());
             }
-        });*/
+        });
     }
 
     @Override

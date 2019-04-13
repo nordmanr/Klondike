@@ -14,11 +14,11 @@ public class TableauStack extends Stack<CardTapLayout> {
 		}
 
 		if(this.peek().getCard().getValue()-1 != item.getCard().getValue()){	// invalid: not next card
-			return item;
+			return null;
 		}
 
 		if(this.peek().getCard().isRed()==item.getCard().isRed()){	// invalid: same color
-			return item;
+			return null;
 		}
 
 		return super.push(item);	// valid: add card
@@ -28,5 +28,12 @@ public class TableauStack extends Stack<CardTapLayout> {
 		return super.push(item);
 	}
 
-
+	public boolean canPush(CardTapLayout item){
+		if(push(item) != null){
+			pop();
+			return true;
+		}else{
+			return false;
+		}
+	}
 }

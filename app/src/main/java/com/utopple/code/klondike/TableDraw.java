@@ -1,9 +1,11 @@
 package com.utopple.code.klondike;
 
 import android.content.Context;
+import android.os.SystemClock;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.Iterator;
 
@@ -12,10 +14,10 @@ public class TableDraw {
 	//public static CardTapLayout moveCard;	// which card we are trying to move (null when none is selected)
 
 	private MainActivity context;
-	private TalonArea talonArea;
-	private WasteArea wasteArea;
-	private TableauArea[] tableauAreas;
-	private FoundationArea[] foundationAreas;
+	public TalonArea talonArea;
+	public WasteArea wasteArea;
+	public TableauArea[] tableauAreas;
+	public FoundationArea[] foundationAreas;
 
 	public TableDraw(MainActivity context){
 		this.context = context;
@@ -34,24 +36,8 @@ public class TableDraw {
 			foundationAreas[i] = new FoundationArea(context);
 		}
 
-		/* Positioning */
-		// Talon
-		((RelativeLayout) context.findViewById(R.id.loc_talon)).addView(talonArea);
-		// Waste
-		((RelativeLayout) context.findViewById(R.id.loc_waste)).addView(wasteArea);
-		// Tableaus (7)
-		((RelativeLayout) context.findViewById(R.id.loc_tableau1)).addView(tableauAreas[0]);
-		((RelativeLayout) context.findViewById(R.id.loc_tableau2)).addView(tableauAreas[1]);
-		((RelativeLayout) context.findViewById(R.id.loc_tableau3)).addView(tableauAreas[2]);
-		((RelativeLayout) context.findViewById(R.id.loc_tableau4)).addView(tableauAreas[3]);
-		((RelativeLayout) context.findViewById(R.id.loc_tableau5)).addView(tableauAreas[4]);
-		((RelativeLayout) context.findViewById(R.id.loc_tableau6)).addView(tableauAreas[5]);
-		((RelativeLayout) context.findViewById(R.id.loc_tableau7)).addView(tableauAreas[6]);
-		// Foundations (4)
-		((RelativeLayout) context.findViewById(R.id.loc_foundation1)).addView(foundationAreas[0]);
-		((RelativeLayout) context.findViewById(R.id.loc_foundation2)).addView(foundationAreas[1]);
-		((RelativeLayout) context.findViewById(R.id.loc_foundation3)).addView(foundationAreas[2]);
-		((RelativeLayout) context.findViewById(R.id.loc_foundation4)).addView(foundationAreas[3]);
+		setAlignment();
+
 
 		// Start game
 		restart();
@@ -70,8 +56,6 @@ public class TableDraw {
 			currentCardTapLayout = new CardTapLayout(context, deck.getAllCards()[i]);
 			talonArea.push(currentCardTapLayout);
 		}
-
-		//talonArea.addView(rect);
 
 		for(int i=0; i<7; i++){
 			for(int j=0; j<=i; j++){
@@ -100,6 +84,26 @@ public class TableDraw {
 		GLOBAL_VARS.heightOfCard = ((int) (GLOBAL_VARS.widthOfCard * 1.5));
 
 		GLOBAL_VARS.margin = ((GLOBAL_VARS.viewWidth-7*GLOBAL_VARS.widthOfCard)-dpToPx(context,20))/(7);	// Space between cards
+	}
+	private void setAlignment(){
+		/* Positioning */
+		// Talon
+		((RelativeLayout) context.findViewById(R.id.loc_talon)).addView(talonArea);
+		// Waste
+		((RelativeLayout) context.findViewById(R.id.loc_waste)).addView(wasteArea);
+		// Tableaus (7)
+		((RelativeLayout) context.findViewById(R.id.loc_tableau1)).addView(tableauAreas[0]);
+		((RelativeLayout) context.findViewById(R.id.loc_tableau2)).addView(tableauAreas[1]);
+		((RelativeLayout) context.findViewById(R.id.loc_tableau3)).addView(tableauAreas[2]);
+		((RelativeLayout) context.findViewById(R.id.loc_tableau4)).addView(tableauAreas[3]);
+		((RelativeLayout) context.findViewById(R.id.loc_tableau5)).addView(tableauAreas[4]);
+		((RelativeLayout) context.findViewById(R.id.loc_tableau6)).addView(tableauAreas[5]);
+		((RelativeLayout) context.findViewById(R.id.loc_tableau7)).addView(tableauAreas[6]);
+		// Foundations (4)
+		((RelativeLayout) context.findViewById(R.id.loc_foundation1)).addView(foundationAreas[0]);
+		((RelativeLayout) context.findViewById(R.id.loc_foundation2)).addView(foundationAreas[1]);
+		((RelativeLayout) context.findViewById(R.id.loc_foundation3)).addView(foundationAreas[2]);
+		((RelativeLayout) context.findViewById(R.id.loc_foundation4)).addView(foundationAreas[3]);
 	}
 
 	private int dpToPx(Context context, int dp) {

@@ -1,6 +1,7 @@
 package com.utopple.code.klondike;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +14,20 @@ public class TableauArea extends DrawableArea {
 		cardTapLayouts = new TableauStack();
 	}
 
+	public CardTapLayout pop(){
+		CardTapLayout popped = cardTapLayouts.pop();
+		this.removeView(popped);
+
+		return popped;
+	}
+
+	public void push(CardTapLayout pushing){
+		if(cardTapLayouts.canPush(pushing)){
+			this.addView(pushing);
+			alignView(pushing);
+			cardTapLayouts.push(pushing);
+		}
+	}
 	public CardTapLayout forcePush(CardTapLayout item){
 		this.addView(item);
 		alignView(item);
@@ -29,7 +44,6 @@ public class TableauArea extends DrawableArea {
 
 		return list;
 	}
-
 	public void pushAll(List<CardTapLayout> pushList){
 		Iterator<CardTapLayout> iter = pushList.iterator();
 
