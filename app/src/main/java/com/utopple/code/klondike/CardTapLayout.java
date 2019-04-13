@@ -12,6 +12,12 @@ public class CardTapLayout extends TapLayout {
 		cardLayout = new CardLayout(context);
 	}
 
+	public CardTapLayout(Context context, Card card) {
+		super(context);
+		this.card = card;
+		cardLayout = new CardLayout(context, card);
+		this.addView(cardLayout);
+	}
 
 	public void setCard(Card card) {
 		this.card = card;
@@ -19,9 +25,5 @@ public class CardTapLayout extends TapLayout {
 	}
 	public Card getCard() {
 		return card;
-	}
-
-	public void draw(int widthCard, int heightCard, int widthTap, int heightTap){
-		cardLayout.drawCard(widthCard, heightCard);
 	}
 }

@@ -20,6 +20,13 @@ public class CardLayout extends LinearLayout {
 		super(context, attrs);
 	}
 
+	public CardLayout(Context context, Card card){
+		super(context);
+		this.card = card;
+
+		initLayout(GLOBAL_VARS.widthOfCard, GLOBAL_VARS.heightOfCard);
+	}
+
 	public void setCard(Card card) {
 		this.card = card;
 	}
@@ -27,7 +34,7 @@ public class CardLayout extends LinearLayout {
 		return card;
 	}
 
-	public void drawCard(int widthOfCard, int heightOfCard){
+	public void initLayout(int widthOfCard, int heightOfCard){
 		TextView label1,label2;
 		ImageView suitImage;
 		LinearLayout.LayoutParams suitLayout, cardLayout;

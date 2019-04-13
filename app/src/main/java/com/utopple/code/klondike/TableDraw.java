@@ -2,6 +2,7 @@ package com.utopple.code.klondike;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import java.util.Iterator;
@@ -66,16 +67,17 @@ public class TableDraw {
 
 		// Create every card and put it in the Talon
 		for(int i=0; i<52; i++){
-			currentCardTapLayout = new CardTapLayout(context);
-			currentCardTapLayout.setCard(deck.getAllCards()[i]);
+			currentCardTapLayout = new CardTapLayout(context, deck.getAllCards()[i]);
 			talonArea.push(currentCardTapLayout);
 		}
 
+		//talonArea.addView(rect);
+/*
 		for(int i=0; i<7; i++){
 			for(int j=0; j<=i; j++){
 				tableauAreas[i].addCard(talonArea.pop());
 			}
-		}
+		}*/
 	}
 
 	public void refillTalon(){
