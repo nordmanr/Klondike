@@ -1,11 +1,8 @@
 package com.utopple.code.klondike;
 
 import android.content.Context;
-import android.os.SystemClock;
 import android.util.DisplayMetrics;
-import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import java.util.Iterator;
 
@@ -49,11 +46,11 @@ public class TableDraw {
 		Deck deck = new Deck();
 		deck.shuffle();
 
-		CardTapLayout currentCardTapLayout;
+		CardTappable currentCardTapLayout;
 
 		// Create every card and put it in the Talon
 		for(int i=0; i<52; i++){
-			currentCardTapLayout = new CardTapLayout(context, deck.getAllCards()[i]);
+			currentCardTapLayout = new CardTappable(context, deck.getAllCards()[i]);
 			talonArea.push(currentCardTapLayout);
 		}
 
@@ -65,8 +62,8 @@ public class TableDraw {
 	}
 
 	public void refillTalon(){
-		Iterator<CardTapLayout> iter = wasteArea.cardTapLayouts.iterator();
-		CardTapLayout current;
+		Iterator<CardTappable> iter = wasteArea.cardTapLayouts.iterator();
+		CardTappable current;
 
 		while(iter.hasNext()){
 			iter.next();

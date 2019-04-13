@@ -2,13 +2,13 @@ package com.utopple.code.klondike;
 
 import java.util.Stack;
 
-public class FoundationStack extends Stack<CardTapLayout> {
+public class FoundationStack extends Stack<CardTappable> {
 	public FoundationStack() {
 		super();
 	}
 
 	@Override
-	public CardTapLayout push(CardTapLayout item) {
+	public CardTappable push(CardTappable item) {
 		if(this.isEmpty()){		// add when empty
 			return super.push(item);
 		}

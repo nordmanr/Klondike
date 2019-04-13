@@ -2,13 +2,13 @@ package com.utopple.code.klondike;
 
 import java.util.Stack;
 
-public class TableauStack extends Stack<CardTapLayout> {
+public class TableauStack extends Stack<CardTappable> {
 	public TableauStack() {
 		super();
 	}
 
 	@Override
-	public CardTapLayout push(CardTapLayout item) {
+	public CardTappable push(CardTappable item) {
 		if(this.isEmpty()){		// add when empty
 			return super.push(item);
 		}
@@ -24,11 +24,11 @@ public class TableauStack extends Stack<CardTapLayout> {
 		return super.push(item);	// valid: add card
 	}
 
-	public CardTapLayout forcePush(CardTapLayout item){
+	public CardTappable forcePush(CardTappable item){
 		return super.push(item);
 	}
 
-	public boolean canPush(CardTapLayout item){
+	public boolean canPush(CardTappable item){
 		if(push(item) != null){
 			pop();
 			return true;
