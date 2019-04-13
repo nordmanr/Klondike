@@ -1,7 +1,10 @@
-package com.utopple.code.klondike;
+package com.utopple.code.klondike.oldCode;
 
 import android.content.Context;
 import android.widget.RelativeLayout;
+
+import com.utopple.code.klondike.CardLayout;
+import com.utopple.code.klondike.DrawableArea;
 
 public class FoundationArea extends DrawableArea {
 	public FoundationArea(Context context) {
@@ -13,8 +16,8 @@ public class FoundationArea extends DrawableArea {
 		LayoutParams relativeParams;
 
 		// if there are cards in the talon
-		if(! cardLayouts.isEmpty()){
-			currentCardLayout = cardLayouts.peek();
+		if(! cardTapLayouts.isEmpty()){
+			currentCardLayout = cardTapLayouts.peek();
 
 			// set up card
 			currentCardLayout.drawCard(TableDrawer.widthOfCard, TableDrawer.heightOfCard);

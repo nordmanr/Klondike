@@ -1,9 +1,16 @@
-package com.utopple.code.klondike;
+package com.utopple.code.klondike.oldCode;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.utopple.code.klondike.Card;
+import com.utopple.code.klondike.CardLayout;
+import com.utopple.code.klondike.CardTapLayout;
+import com.utopple.code.klondike.Deck;
+import com.utopple.code.klondike.MainActivity;
+import com.utopple.code.klondike.R;
 
 import java.util.Iterator;
 
@@ -17,14 +24,13 @@ public class TableDrawer {
 
 	public static CardLayout moveCard;	// which card we are trying to move (null when none is selected)
 
-	private Table table;
 	private MainActivity context;
 	private TalonArea talonArea;
 	private WasteArea wasteArea;
 	private TableauArea[] tableauAreas;
 	private FoundationArea[] foundationAreas;
 
-	TableDrawer(Table table, MainActivity context){
+	TableDrawer(MainActivity context){
 		// Sizing	--------------------------------------------------------------------------------
 		viewWidth = context.getResources().getDisplayMetrics().widthPixels;
 		viewHeight = context.getResources().getDisplayMetrics().heightPixels;
@@ -35,7 +41,6 @@ public class TableDrawer {
 		margin = ((viewWidth-7*widthOfCard)-dpToPx(context,20))/(7);	// Space between cards
 
 		// Initializing	----------------------------------------------------------------------------
-		this.table = table;
 		this.context = context;
 		talonArea = new TalonArea(context);
 		wasteArea = new WasteArea(context);
@@ -49,28 +54,27 @@ public class TableDrawer {
 		}
 
 
-		// Create CardLayouts from table	--------------------------------------------------------
-		Iterator<Card> iter;
-		Card currentCard;
-		CardLayout currentCardLayout;
+		// Create CardTapLayouts from deck	--------------------------------------------------------
+		Deck deck = new Deck();
+		deck.shuffle();
 
-		iter = table.getTalon().iterator();
-		while(iter.hasNext()){
-			currentCard = iter.next();
-			currentCardLayout = new CardLayout(context);
-			currentCardLayout.setCard(currentCard);
-			talonArea.addCardLayout(currentCardLayout);
+		Iterator<Card> iter;
+		CardTapLayout currentCardTapLayout;
+
+		for(int i=0; i<52; i++){
+			currentCardTapLayout = new CardTapLayout(context);
+			currentCardTapLayout.setCard(deck.getAllCards()[i]);
 		}
 
 		for(int i=0; i<7; i++){
-			iter = table.getTableaus()[i].iterator();
-			while(iter.hasNext()){
-				currentCard = iter.next();
-				currentCardLayout = new CardLayout(context);
-				currentCardLayout.setCard(currentCard);
-				tableauAreas[i].addCardLayout(currentCardLayout);
+			for(int j=0; j<=i; j++){
+			///	tableauAreas[i].
 			}
 		}
+
+
+
+
 
 		// Positioning on screen	----------------------------------------------------------------
 

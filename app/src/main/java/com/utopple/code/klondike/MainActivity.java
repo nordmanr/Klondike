@@ -1,18 +1,14 @@
 package com.utopple.code.klondike;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import java.util.Iterator;
+import com.utopple.code.klondike.oldCode.Table;
+import com.utopple.code.klondike.oldCode.TableDrawer;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -29,9 +25,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        table = new Table();
 
-        TableDrawer td = new TableDrawer(table, this);
+
 
 
 

@@ -5,6 +5,7 @@ import android.content.Context;
 public class CardTapLayout extends TapLayout {
 	private Card card;
 	private CardLayout cardLayout;
+	// protected RelativeLayout tapRegion; // this is inherited btw
 
 	public CardTapLayout(Context context) {
 		super(context);
@@ -20,7 +21,7 @@ public class CardTapLayout extends TapLayout {
 		return card;
 	}
 
-	public void draw(){
-
+	public void draw(int widthCard, int heightCard, int widthTap, int heightTap){
+		cardLayout.drawCard(widthCard, heightCard);
 	}
 }
