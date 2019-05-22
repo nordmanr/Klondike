@@ -46,6 +46,10 @@ public class DrawableArea extends RelativeLayout {
 		cardTapLayouts.push(pushing);
 	}
 
+	public CardTappable peek(){
+		return cardTapLayouts.peek();
+	}
+
 	public static int genRandomColor(){
 		return (int)(Math.random()*0xffffff + 0xff000000);
 	}

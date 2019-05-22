@@ -32,6 +32,10 @@ public class CardTappable extends RelativeLayout {
 		return card;
 	}
 
+	public void flip(){
+		cardLayout.flip();
+	}
+
 	public void resizeTapRegion(){
 		RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)cardTapRegion.getLayoutParams();
 		layoutParams.height=GLOBAL_VARS.viewHeight;

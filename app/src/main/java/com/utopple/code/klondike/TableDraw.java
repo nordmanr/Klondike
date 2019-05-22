@@ -59,6 +59,7 @@ public class TableDraw {
 			for(int j=0; j<=i; j++){
 				tableauAreas[i].forcePush(talonArea.pop());
 			}
+			tableauAreas[i].peek().flip();
 		}
 	}
 

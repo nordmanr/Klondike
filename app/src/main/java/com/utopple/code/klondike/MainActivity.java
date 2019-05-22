@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
-	public final static boolean DEBUG_FLAG = true;
+	public final static boolean DEBUG_FLAG = false;
 
 	public TableDraw draw;
 

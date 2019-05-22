@@ -14,10 +14,7 @@ public class TableauArea extends DrawableArea {
 	}
 
 	public CardTappable pop(){
-		CardTappable popped = cardTapLayouts.pop();
-		this.removeView(popped);
-
-		return popped;
+		return super.pop();
 	}
 
 	public void push(CardTappable pushing){
@@ -33,6 +30,11 @@ public class TableauArea extends DrawableArea {
 		this.addView(item);
 		alignView(item);
 		return cardTapLayouts.forcePush(item);
+	}
+
+	@Override
+	public CardTappable peek() {
+		return cardTapLayouts.peek();
 	}
 
 	public List<CardTappable> popTo(CardTappable selected){
