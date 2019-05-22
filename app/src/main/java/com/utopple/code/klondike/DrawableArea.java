@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import java.util.Stack;
@@ -16,9 +15,9 @@ public class DrawableArea extends RelativeLayout {
 		super(context);
 		cardTapLayouts = new Stack<>();
 
-		// sizing ViewGroup.LayoutParams.WRAP_CONTENT
-		RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(GLOBAL_VARS.widthOfCard, ViewGroup.LayoutParams.WRAP_CONTENT);
+		LayoutParams relativeParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		this.setMinimumHeight(GLOBAL_VARS.heightOfCard);
+		this.setMinimumWidth(GLOBAL_VARS.widthOfCard);
 
 		if(MainActivity.DEBUG_FLAG){
 			this.setBackgroundColor(genRandomColor());

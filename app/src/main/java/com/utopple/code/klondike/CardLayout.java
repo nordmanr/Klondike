@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 public class CardLayout extends LinearLayout {
 	private Card card;
+	TextView label1, label2;
+	ImageView suitImage;
 
 	public CardLayout(Context context) {
 		super(context);
@@ -35,8 +37,6 @@ public class CardLayout extends LinearLayout {
 	}
 
 	public void initLayout(int widthOfCard, int heightOfCard){
-		TextView label1,label2;
-		ImageView suitImage;
 		LinearLayout.LayoutParams suitLayout, cardLayout;
 
 		label1 = new TextView(this.getContext());
@@ -121,5 +121,21 @@ public class CardLayout extends LinearLayout {
 		this.setOrientation(LinearLayout.VERTICAL);
 
 		this.setLayoutParams(cardLayout);
+	}
+
+	public void flip(){
+		if(card.isFaceUp()){
+			card.setFaceUp(false);
+			this.removeView(label1);
+			this.removeView(label2);
+			this.removeView(suitImage);
+			this.setBackgroundResource(R.drawable.back_background);
+		}else{
+			card.setFaceUp(true);
+			this.addView(label1);
+			this.addView(suitImage);
+			this.addView(label2);
+			this.setBackgroundResource(R.drawable.front_background);
+		}
 	}
 }

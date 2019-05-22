@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class TableauArea extends DrawableArea {
-	private TableauStack cardTapLayouts;
+	public TableauStack cardTapLayouts;
 
 	public TableauArea(Context context) {
 		super(context);
@@ -25,6 +25,8 @@ public class TableauArea extends DrawableArea {
 			this.addView(pushing);
 			alignView(pushing);
 			cardTapLayouts.push(pushing);
+
+			pushing.resizeTapRegion();
 		}
 	}
 	public CardTappable forcePush(CardTappable item){
@@ -52,10 +54,11 @@ public class TableauArea extends DrawableArea {
 	}
 
 	private void alignView(CardTappable toAlign){
-		LayoutParams layoutParams = new LayoutParams(GLOBAL_VARS.widthOfCard, GLOBAL_VARS.heightOfCard);
+		LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		layoutParams.addRule(ALIGN_PARENT_TOP);
 		layoutParams.topMargin = (cardTapLayouts.size()*(GLOBAL_VARS.heightOfCard/5));
 
 		toAlign.setLayoutParams(layoutParams);
+		toAlign.resizeTapRegion();
 	}
 }

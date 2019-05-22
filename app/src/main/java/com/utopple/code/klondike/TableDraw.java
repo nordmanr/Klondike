@@ -54,6 +54,7 @@ public class TableDraw {
 			talonArea.push(currentCardTapLayout);
 		}
 
+		// setup the talons
 		for(int i=0; i<7; i++){
 			for(int j=0; j<=i; j++){
 				tableauAreas[i].forcePush(talonArea.pop());

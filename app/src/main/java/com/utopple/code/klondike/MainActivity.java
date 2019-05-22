@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-				draw.tableauAreas[0].push(draw.tableauAreas[4].pop());
+				draw.tableauAreas[0].cardTapLayouts.peek().resizeTapRegion();
             }
         });
     }

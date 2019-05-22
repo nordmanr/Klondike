@@ -4,12 +4,18 @@ import android.content.Context;
 import android.widget.RelativeLayout;
 
 public class Tappable extends RelativeLayout {
-	protected RelativeLayout tapRegion;
-
 	/*	Areas that are tap-able and do stuff when tapped
 	* */
 	public Tappable(Context context) {
 		super(context);
-		tapRegion = new RelativeLayout(context);
+
+		RelativeLayout.LayoutParams layoutParams = new LayoutParams(GLOBAL_VARS.widthOfCard, (int)(2*GLOBAL_VARS.heightOfCard));
+		layoutParams.addRule(ALIGN_START);
+		layoutParams.addRule(ALIGN_TOP);
+		this.setLayoutParams(layoutParams);
+
+		if(MainActivity.DEBUG_FLAG){
+			this.setBackgroundDrawable(DrawableArea.getRandomBorder());
+		}
 	}
 }

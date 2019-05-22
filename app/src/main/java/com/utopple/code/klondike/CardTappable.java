@@ -3,31 +3,25 @@ package com.utopple.code.klondike;
 import android.content.Context;
 import android.widget.RelativeLayout;
 
-public class CardTappable extends Tappable {
+public class CardTappable extends RelativeLayout {
 	private Card card;
 	private CardLayout cardLayout;
-	// protected RelativeLayout tapRegion; // this is inherited btw
+	private Tappable cardTapRegion;
 
 	public CardTappable(Context context) {
+		// Don't use this method
 		super(context);
 		cardLayout = new CardLayout(context);
+		cardTapRegion = new Tappable(context);
 	}
 
 	public CardTappable(Context context, Card card) {
 		super(context);
 		this.card = card;
 		cardLayout = new CardLayout(context, card);
+		cardTapRegion = new Tappable(context);
 		this.addView(cardLayout);
-
-		tapRegion.setBackgroundDrawable(DrawableArea.getRandomBorder());
-
-		this.addView(tapRegion);
-		RelativeLayout.LayoutParams layoutParams = new LayoutParams(GLOBAL_VARS.widthOfCard, GLOBAL_VARS.heightOfCard);
-		layoutParams.addRule(ALIGN_START);
-		layoutParams.addRule(ALIGN_TOP);
-		tapRegion.setLayoutParams(layoutParams);
-
-
+		this.addView(cardTapRegion);
 	}
 
 	public void setCard(Card card) {
@@ -36,5 +30,10 @@ public class CardTappable extends Tappable {
 	}
 	public Card getCard() {
 		return card;
+	}
+
+	public void resizeTapRegion(){
+		RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)cardTapRegion.getLayoutParams();
+		layoutParams.height=GLOBAL_VARS.viewHeight;
 	}
 }
