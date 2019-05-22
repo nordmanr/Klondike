@@ -46,11 +46,11 @@ public class TableDraw {
 		Deck deck = new Deck();
 		deck.shuffle();
 
-		CardTappable currentCardTapLayout;
+		CardRegion currentCardTapLayout;
 
 		// Create every card and put it in the Talon
 		for(int i=0; i<52; i++){
-			currentCardTapLayout = new CardTappable(context, deck.getAllCards()[i]);
+			currentCardTapLayout = new CardRegion(context, deck.getAllCards()[i]);
 			talonArea.push(currentCardTapLayout);
 		}
 
@@ -64,8 +64,8 @@ public class TableDraw {
 	}
 
 	public void refillTalon(){
-		Iterator<CardTappable> iter = wasteArea.cardTapLayouts.iterator();
-		CardTappable current;
+		Iterator<CardRegion> iter = wasteArea.cardTapLayouts.iterator();
+		CardRegion current;
 
 		while(iter.hasNext()){
 			iter.next();

@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 import java.util.Stack;
 
 public class DrawableArea extends RelativeLayout {
-	protected Stack<CardTappable> cardTapLayouts;
+	protected Stack<CardRegion> cardTapLayouts;
 
 	public DrawableArea(Context context){
 		super(context);
@@ -34,19 +34,19 @@ public class DrawableArea extends RelativeLayout {
 		cardTapLayouts = new Stack<>();
 	}
 
-	public CardTappable pop(){
-		CardTappable popped = cardTapLayouts.pop();
+	public CardRegion pop(){
+		CardRegion popped = cardTapLayouts.pop();
 		this.removeView(popped);
 
 		return popped;
 	}
 
-	public void push(CardTappable pushing){
+	public void push(CardRegion pushing){
 		this.addView(pushing);
 		cardTapLayouts.push(pushing);
 	}
 
-	public CardTappable peek(){
+	public CardRegion peek(){
 		return cardTapLayouts.peek();
 	}
 

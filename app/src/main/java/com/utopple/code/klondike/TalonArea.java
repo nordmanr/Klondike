@@ -7,16 +7,16 @@ public class TalonArea extends DrawableArea {
 		super(context);
 	}
 
-	public CardTappable pop(){
+	public CardRegion pop(){
 		return super.pop();
 	}
 
-	public void push(CardTappable pushing){
+	public void push(CardRegion pushing){
 		super.push(pushing);
 		alignView(pushing);
 	}
 
-	private void alignView(CardTappable toAlign){
+	private void alignView(CardRegion toAlign){
 		LayoutParams layoutParams = new LayoutParams(GLOBAL_VARS.widthOfCard, GLOBAL_VARS.heightOfCard);
 		layoutParams.addRule(ALIGN_PARENT_START);
 		layoutParams.addRule(ALIGN_PARENT_LEFT);

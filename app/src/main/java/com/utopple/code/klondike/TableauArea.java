@@ -13,11 +13,11 @@ public class TableauArea extends DrawableArea {
 		cardTapLayouts = new TableauStack();
 	}
 
-	public CardTappable pop(){
+	public CardRegion pop(){
 		return super.pop();
 	}
 
-	public void push(CardTappable pushing){
+	public void push(CardRegion pushing){
 		if(cardTapLayouts.canPush(pushing)){
 			this.addView(pushing);
 			alignView(pushing);
@@ -26,20 +26,20 @@ public class TableauArea extends DrawableArea {
 			pushing.resizeTapRegion();
 		}
 	}
-	public CardTappable forcePush(CardTappable item){
+	public CardRegion forcePush(CardRegion item){
 		this.addView(item);
 		alignView(item);
 		return cardTapLayouts.forcePush(item);
 	}
 
 	@Override
-	public CardTappable peek() {
+	public CardRegion peek() {
 		return cardTapLayouts.peek();
 	}
 
-	public List<CardTappable> popTo(CardTappable selected){
+	public List<CardRegion> popTo(CardRegion selected){
 		int index = cardTapLayouts.indexOf(selected);
-		List<CardTappable> list = cardTapLayouts.subList(0, index);
+		List<CardRegion> list = cardTapLayouts.subList(0, index);
 
 		while(index < cardTapLayouts.size()){
 			this.removeView(cardTapLayouts.pop());
@@ -47,15 +47,15 @@ public class TableauArea extends DrawableArea {
 
 		return list;
 	}
-	public void pushAll(List<CardTappable> pushList){
-		Iterator<CardTappable> iter = pushList.iterator();
+	public void pushAll(List<CardRegion> pushList){
+		Iterator<CardRegion> iter = pushList.iterator();
 
 		while(iter.hasNext()){
 			push(iter.next());
 		}
 	}
 
-	private void alignView(CardTappable toAlign){
+	private void alignView(CardRegion toAlign){
 		LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		layoutParams.addRule(ALIGN_PARENT_TOP);
 		layoutParams.topMargin = (cardTapLayouts.size()*(GLOBAL_VARS.heightOfCard/5));

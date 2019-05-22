@@ -9,20 +9,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class CardLayout extends LinearLayout {
+public class CardVisual extends LinearLayout {
 	private Card card;
 	TextView label1, label2;
 	ImageView suitImage;
 
-	public CardLayout(Context context) {
+	public CardVisual(Context context) {
 		super(context);
 	}
 
-	public CardLayout(Context context, @Nullable AttributeSet attrs) {
+	public CardVisual(Context context, @Nullable AttributeSet attrs) {
 		super(context, attrs);
 	}
 
-	public CardLayout(Context context, Card card){
+	public CardVisual(Context context, Card card){
 		super(context);
 		this.card = card;
 
