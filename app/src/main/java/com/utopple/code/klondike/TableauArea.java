@@ -1,66 +1,74 @@
 package com.utopple.code.klondike;
 
 import android.content.Context;
+import android.widget.Toast;
+
+import com.utopple.code.klondike.Stacks.TableauStack;
 
 import java.util.Iterator;
 import java.util.List;
 
 public class TableauArea extends DrawableArea {
-	public TableauStack cardTapLayouts;
+	public TableauStack cardRegions;
 
 	public TableauArea(Context context) {
 		super(context);
-		cardTapLayouts = new TableauStack();
+		cardRegions = new TableauStack();
 	}
 
 	public CardRegion pop(){
-		return super.pop();
+		CardRegion popped = cardRegions.pop();
+		this.removeView(popped);
+
+		return popped;
 	}
 
 	public void push(CardRegion pushing){
-		if(cardTapLayouts.canPush(pushing)){
+		if(cardRegions.canPush(pushing)){
 			this.addView(pushing);
 			alignView(pushing);
-			cardTapLayouts.push(pushing);
+			cardRegions.push(pushing);
 
-			pushing.resizeTapRegion();
+			pushing.resizeTapRegionMax();
 		}
 	}
 	public CardRegion forcePush(CardRegion item){
 		this.addView(item);
 		alignView(item);
-		return cardTapLayouts.forcePush(item);
+		return cardRegions.forcePush(item);
 	}
 
 	@Override
 	public CardRegion peek() {
-		return cardTapLayouts.peek();
+		return cardRegions.peek();
 	}
 
 	public List<CardRegion> popTo(CardRegion selected){
-		int index = cardTapLayouts.indexOf(selected);
-		List<CardRegion> list = cardTapLayouts.subList(0, index);
+		int index = cardRegions.indexOf(selected);
+		List<CardRegion> list = cardRegions.subList(index, cardRegions.size());
 
-		while(index < cardTapLayouts.size()){
-			this.removeView(cardTapLayouts.pop());
+		while(index < cardRegions.size()){
+			this.pop();
 		}
 
 		return list;
 	}
 	public void pushAll(List<CardRegion> pushList){
-		Iterator<CardRegion> iter = pushList.iterator();
+		Iterator<CardRegion> iterator = pushList.iterator();
+		Toast.makeText(getContext(), "pushlist size: "+pushList.size(), Toast.LENGTH_SHORT).show();
+	}
 
-		while(iter.hasNext()){
-			push(iter.next());
-		}
+	@Override
+	public boolean contains(CardRegion cardRegion) {
+		return cardRegions.contains(cardRegion);
 	}
 
 	private void alignView(CardRegion toAlign){
 		LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		layoutParams.addRule(ALIGN_PARENT_TOP);
-		layoutParams.topMargin = (cardTapLayouts.size()*(GLOBAL_VARS.heightOfCard/5));
+		layoutParams.topMargin = (cardRegions.size()*(GLOBAL_VARS.heightOfCard/5));
 
 		toAlign.setLayoutParams(layoutParams);
-		toAlign.resizeTapRegion();
+		toAlign.resizeTapRegionMax();
 	}
 }

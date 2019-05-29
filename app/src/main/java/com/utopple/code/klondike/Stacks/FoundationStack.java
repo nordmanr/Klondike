@@ -1,4 +1,6 @@
-package com.utopple.code.klondike;
+package com.utopple.code.klondike.Stacks;
+
+import com.utopple.code.klondike.CardRegion;
 
 import java.util.Stack;
 

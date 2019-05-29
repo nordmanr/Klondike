@@ -36,8 +36,16 @@ public class CardRegion extends RelativeLayout {
 		cardVisual.flip();
 	}
 
-	public void resizeTapRegion(){
+	public void resizeTapRegionMax(){
 		RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) cardTappable.getLayoutParams();
 		layoutParams.height=GLOBAL_VARS.viewHeight;
+	}
+
+	public void resizeTapRegionFit(){
+		RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) cardTappable.getLayoutParams();
+		RelativeLayout.LayoutParams layoutParams1 = (RelativeLayout.LayoutParams) cardVisual.getLayoutParams();
+
+		layoutParams.height = layoutParams1.height;
+		layoutParams.width = layoutParams1.width;
 	}
 }

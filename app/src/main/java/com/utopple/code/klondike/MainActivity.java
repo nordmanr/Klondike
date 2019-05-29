@@ -1,20 +1,18 @@
 package com.utopple.code.klondike;
 
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
 	public final static boolean DEBUG_FLAG = false;
 
-	public TableDraw draw;
+	public static TableDraw draw;
 
 
     @Override
@@ -53,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-				draw.tableauAreas[0].cardTapLayouts.peek().resizeTapRegion();
+				draw.tableauAreas[0].cardRegions.peek().resizeTapRegionMax();
             }
         });
     }

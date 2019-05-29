@@ -1,5 +1,8 @@
-package com.utopple.code.klondike;
+package com.utopple.code.klondike.Stacks;
 
+import com.utopple.code.klondike.CardRegion;
+
+import java.util.ConcurrentModificationException;
 import java.util.Stack;
 
 public class TableauStack extends Stack<CardRegion> {

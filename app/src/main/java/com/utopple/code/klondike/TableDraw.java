@@ -64,7 +64,7 @@ public class TableDraw {
 	}
 
 	public void refillTalon(){
-		Iterator<CardRegion> iter = wasteArea.cardTapLayouts.iterator();
+		Iterator<CardRegion> iter = wasteArea.cardRegions.iterator();
 		CardRegion current;
 
 		while(iter.hasNext()){
@@ -72,6 +72,34 @@ public class TableDraw {
 
 			talonArea.push(wasteArea.pop());
 		}
+	}
+
+	public int[] findCardRegion(CardRegion cardRegion){
+		//	locMark[0]  |  1-4  |  Talon,Waste,Tableau,Foundation
+		//	locMark[1]  |  0-6  |  Which tableau or foundation (0-6 or 0-3)
+		int[] locMark = new int[]{0,0};
+
+		if(talonArea.contains(cardRegion)){
+			locMark[0] = 1;
+		}else if(wasteArea.contains(cardRegion)){
+			locMark[0] = 2;
+		}else{
+			for(int i=0;i<7;i++){
+				if(tableauAreas[i].contains(cardRegion)){
+					locMark[0] = 3;
+					locMark[1] = i;
+				}
+			}
+
+			for(int i=0; i<4; i++){
+				if(foundationAreas[i].contains(cardRegion)){
+					locMark[0] = 4;
+					locMark[1] = i;
+				}
+			}
+		}
+
+		return locMark;
 	}
 
 	private void setSizing(){

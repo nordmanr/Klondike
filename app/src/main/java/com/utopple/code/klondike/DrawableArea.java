@@ -9,11 +9,11 @@ import android.widget.RelativeLayout;
 import java.util.Stack;
 
 public class DrawableArea extends RelativeLayout {
-	protected Stack<CardRegion> cardTapLayouts;
+	protected Stack<CardRegion> cardRegions;
 
 	public DrawableArea(Context context){
 		super(context);
-		cardTapLayouts = new Stack<>();
+		cardRegions = new Stack<>();
 
 		LayoutParams relativeParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		this.setMinimumHeight(GLOBAL_VARS.heightOfCard);
@@ -31,11 +31,11 @@ public class DrawableArea extends RelativeLayout {
 	public DrawableArea(Context context, @Nullable AttributeSet attrs) {
 		super(context, attrs);
 
-		cardTapLayouts = new Stack<>();
+		cardRegions = new Stack<>();
 	}
 
 	public CardRegion pop(){
-		CardRegion popped = cardTapLayouts.pop();
+		CardRegion popped = cardRegions.pop();
 		this.removeView(popped);
 
 		return popped;
@@ -43,11 +43,23 @@ public class DrawableArea extends RelativeLayout {
 
 	public void push(CardRegion pushing){
 		this.addView(pushing);
-		cardTapLayouts.push(pushing);
+		cardRegions.push(pushing);
 	}
 
 	public CardRegion peek(){
-		return cardTapLayouts.peek();
+		return cardRegions.peek();
+	}
+
+	public boolean contains(CardRegion cardRegion){
+		return cardRegions.contains(cardRegion);
+	}
+
+	private void alignView(CardRegion toAlign){
+		LayoutParams layoutParams = new LayoutParams(GLOBAL_VARS.widthOfCard, GLOBAL_VARS.heightOfCard);
+		layoutParams.addRule(ALIGN_PARENT_START);
+		layoutParams.addRule(ALIGN_PARENT_LEFT);
+
+		toAlign.setLayoutParams(layoutParams);
 	}
 
 	public static int genRandomColor(){
